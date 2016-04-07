@@ -1,8 +1,8 @@
+/**
+ * Muber 2016. Copyright © All rights reserved.
+ */
 package asd.org.controler;
 
-/**
- * Created by lucas on 6 abr 2016.
- */
 public class GameController {
 
     public char[] findLetter(char[] originalWorld, char[] world, CharSequence letter) {

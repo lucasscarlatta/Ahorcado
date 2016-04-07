@@ -1,3 +1,6 @@
+/**
+ * Muber 2016. Copyright © All rights reserved.
+ */
 package asd.org.ahorcado;
 
 import android.os.Bundle;
@@ -19,7 +22,7 @@ public class GameActivity extends AppCompatActivity {
         setContentView(R.layout.game_screem);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        TextView world = (TextView)findViewById(R.id.world);
+        TextView world = (TextView) findViewById(R.id.world);
         world.setText(gameController.setText());
     }
 
@@ -29,13 +32,13 @@ public class GameActivity extends AppCompatActivity {
         CharSequence letter = button.getText();
 
         //TODO get original world.
-        char [] originalWorld = "MUBER".toCharArray();
+        char[] originalWorld = "MUBER".toCharArray();
 
-        TextView textViewWorld = (TextView)findViewById(R.id.world);
+        TextView textViewWorld = (TextView) findViewById(R.id.world);
         final StringBuilder sb = new StringBuilder(textViewWorld.getText().length());
         sb.append(textViewWorld.getText());
-        char [] myWorld = sb.toString().toCharArray();
-        myWorld = gameController.findLetter(originalWorld, myWorld ,letter);
+        char[] myWorld = sb.toString().toCharArray();
+        myWorld = gameController.findLetter(originalWorld, myWorld, letter);
         textViewWorld.setText(gameController.myNewWorld(myWorld));
     }
 

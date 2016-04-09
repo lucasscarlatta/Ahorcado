@@ -1,4 +1,7 @@
-package asd.org.ahorcado;
+/**
+ * Muber 2016. Copyright © All rights reserved.
+ */
+package asd.org.ahorcado.activities;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -8,6 +11,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import asd.org.ahorcado.R;
 
 public class MainActivity extends AppCompatActivity {
 

@@ -7,6 +7,8 @@ public class Word extends AbstractWord {
 
     private int category;
 
+//TODO:Falta el constructor con los parámetros del super
+
     public Word(int category) {
         super();
         this.category = category;

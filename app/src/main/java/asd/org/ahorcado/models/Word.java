@@ -7,11 +7,6 @@ public class Word extends AbstractWord {
 
     private int category;
 
-/**    public Word(int category) {
-        super();
-        this.category = category;
-    }
-**/
     public void setMyLetter(char letter) {
         char[] charWord = getOriginalWord().toCharArray();
         for (int i = 0; i < charWord.length; i++) {

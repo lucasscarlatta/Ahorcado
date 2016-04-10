@@ -33,7 +33,7 @@ public abstract class AbstractWord {
         this.originalWord = originalWord;
     }
 
-    protected abstract boolean containsLetter(CharSequence letter);
+    protected abstract boolean containsLetter(char letter);
 
     protected abstract void setMark(int position);
 

@@ -2,28 +2,32 @@ package asd.org.ahorcado.models;
 
 public abstract class AbstractGuess {
 
-    private AbstractWord abstractWord;
-
-    public AbstractWord getAbstractWord() {
-        return abstractWord;
+    private Word word = new Word();
+    
+    public String processWord(char letter) {
+        this.word.inverseLetter();
+        this.word.setMyLetter(letter);
+        this.word.exchangeLetters();
+        return this.word.getWord();
     }
 
-    public void setAbstractWord(AbstractWord abstractWord) {
-        this.abstractWord = abstractWord;
-    }
-
-    public String processWord(CharSequence letter) {
-        if(this.abstractWord.containsLetter(letter)){
-            this.abstractWord.exchangeLetters();
-        }
-        return this.abstractWord.getWord();
-    }
-
-    public boolean guessLetter(CharSequence letter){
-        return this.abstractWord.containsLetter(letter);
+    public boolean guessLetter(char letter) {
+        return this.word.containsLetter(letter);
     }
 
     public boolean isComplete() {
-        return this.abstractWord.isComplete();
+        return this.word.isComplete();
+    }
+
+    public String getNewWord() {
+        //TODO Huber;
+        word.setOriginalWord("ACTIVITY");
+        word.setWord("ACTIVITY");
+        word.setSize(8);
+        StringBuilder sbWord = new StringBuilder();
+        for (int i = 0; i < word.getSize(); i++){
+            sbWord.append("_");
+        }
+        return sbWord.toString();
     }
 }

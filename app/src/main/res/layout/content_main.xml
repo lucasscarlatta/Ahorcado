@@ -17,7 +17,7 @@
         android:layout_height="wrap_content"
         android:text="@string/play_button"
         android:id="@+id/button"
-        android:onClick="guessWord"
+        android:onClick="lunchGame"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true" />
 </RelativeLayout>

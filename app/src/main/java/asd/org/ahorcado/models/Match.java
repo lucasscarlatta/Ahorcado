@@ -3,7 +3,7 @@
  */
 package asd.org.ahorcado.models;
 
-public class Match {
+public class Match extends AbstractMatch{
 
     private User user;
     private Word word;

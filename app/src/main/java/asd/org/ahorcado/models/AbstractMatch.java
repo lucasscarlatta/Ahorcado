@@ -7,18 +7,10 @@ import asd.org.ahorcado.exceptions.MatchLostException;
 
 public abstract class AbstractMatch {
 
-    private AbstractGuess abstractGuess;
+    private GuessWord guessWord = new GuessWord();
     private int life;
     private User user;
     private boolean result;
-
-    public AbstractGuess getAbstractGuess() {
-        return abstractGuess;
-    }
-
-    public void setAbstractGuess(AbstractGuess abstractGuess) {
-        this.abstractGuess = abstractGuess;
-    }
 
     public int getLife() {
         return life;
@@ -44,18 +36,21 @@ public abstract class AbstractMatch {
         this.result = result;
     }
 
-    public String execute(CharSequence letter) {
-        return this.abstractGuess.processWord(letter);
+    public String execute(char letter) {
+        return this.guessWord.processWord(letter);
     }
 
-    public boolean afterExecute(CharSequence letter) throws MatchLostException {
-        if (!this.abstractGuess.guessLetter(letter)) {
+    public boolean afterExecute(char letter) throws MatchLostException {
+        if (!this.guessWord.guessLetter(letter)) {
             --life;
             if (life == 0) {
                 throw new MatchLostException();
             }
         }
-        return this.abstractGuess.isComplete();
+        return this.guessWord.isComplete();
     }
 
+    public String getNewWord() {
+        return guessWord.getNewWord();
+    }
 }

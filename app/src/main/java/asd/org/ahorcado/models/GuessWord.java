@@ -3,6 +3,6 @@
  */
 package asd.org.ahorcado.models;
 
-public class GuessWord {
+public class GuessWord extends AbstractGuess {
 
 }

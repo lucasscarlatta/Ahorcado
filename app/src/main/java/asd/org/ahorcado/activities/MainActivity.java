@@ -3,6 +3,7 @@
  */
 package asd.org.ahorcado.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -45,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void guessWord(View view){
-        
+    public void lunchGame(View view) {
+        startActivity(new Intent(this, InputActivity.class));
     }
 }

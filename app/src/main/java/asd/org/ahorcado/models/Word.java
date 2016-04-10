@@ -7,17 +7,25 @@ public class Word extends AbstractWord {
 
     private int category;
 
-    public Word(int category) {
+/**    public Word(int category) {
         super();
         this.category = category;
     }
-
-    public boolean containsLetter(CharSequence letter) {
-        boolean result = false;
-        char[] charWord = getWord().toCharArray();
+**/
+    public void setMyLetter(char letter) {
+        char[] charWord = getOriginalWord().toCharArray();
         for (int i = 0; i < charWord.length; i++) {
-            if (letter.equals(charWord[i])) {
+            if (letter == charWord[i]) {
                 setMark(i);
+            }
+        }
+    }
+
+    public boolean containsLetter(char letter) {
+        boolean result = false;
+        char[] charWord = getOriginalWord().toCharArray();
+        for (int i = 0; i < charWord.length; i++) {
+            if (letter == charWord[i]) {
                 result = true;
             }
         }
@@ -25,17 +33,37 @@ public class Word extends AbstractWord {
     }
 
     protected void setMark(int position) {
-        getWord().toCharArray()[position] = '_';
+        StringBuilder word = new StringBuilder(getWord());
+        word.setCharAt(position, '_');
+        setWord(word.toString());
     }
 
     public void exchangeLetters() {
-        char[] wordChars = getWord().toCharArray();
+        char[] wordChars = getWord().toString().toCharArray();
         char[] originalWordChars = getOriginalWord().toCharArray();
         for (int i = 0; i < wordChars.length; i++) {
             if (wordChars[i] != originalWordChars[i]) {
-                wordChars[i] = originalWordChars[i];
+                StringBuilder word = new StringBuilder(getWord());
+                word.setCharAt(i, originalWordChars[i]);
+                setWord(word.toString());
             } else {
                 setMark(i);
+            }
+        }
+    }
+
+    public void inverseLetter(){
+        if(!getWord().toString().equals(getOriginalWord().toString())){
+            char[] wordChars = getWord().toString().toCharArray();
+            char[] originalWordChars = getOriginalWord().toCharArray();
+            for(int i = 0; i<wordChars.length;i++){
+                if(wordChars[i] == '_'){
+                    StringBuilder word = new StringBuilder(getWord());
+                    word.setCharAt(i, originalWordChars[i]);
+                    setWord(word.toString());
+                } else {
+                    setMark(i);
+                }
             }
         }
     }

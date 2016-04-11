@@ -1,33 +1,32 @@
 package asd.org.ahorcado.models;
 
+import asd.org.ahorcado.exceptions.ForbiddenCharacterException;
+import asd.org.ahorcado.interfaces.HangmanWord;
+
 public abstract class AbstractGuess {
 
-    private Word word = new Word();
-    
+    protected HangmanWord originalWord;
+    protected HangmanWord word;
+
+    public abstract void inverseLetter();
+    public abstract void exchangeLetters();
+
     public String processWord(char letter) {
-        this.word.inverseLetter();
-        this.word.setMyLetter(letter);
-        this.word.exchangeLetters();
+        inverseLetter();
+        this.word.markLetter(letter);
+        exchangeLetters();
         return this.word.getWord();
     }
 
-    public boolean guessLetter(char letter) {
-        return this.word.containsLetter(letter);
+    public boolean guessLetter(char letter) throws Exception {
+        if(Character.isLetter(letter)) {
+            return this.word.containsLetter(letter);
+        } else {
+            throw new ForbiddenCharacterException();
+        }
     }
 
     public boolean isComplete() {
         return this.word.isComplete();
-    }
-
-    public String getNewWord() {
-        //TODO Huber;
-        word.setOriginalWord("ACTIVITY");
-        word.setWord("ACTIVITY");
-        word.setSize(8);
-        StringBuilder sbWord = new StringBuilder();
-        for (int i = 0; i < word.getSize(); i++){
-            sbWord.append("_");
-        }
-        return sbWord.toString();
     }
 }

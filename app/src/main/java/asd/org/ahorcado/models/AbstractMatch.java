@@ -53,4 +53,8 @@ public abstract class AbstractMatch {
     public String getNewWord() {
         return guessWord.getNewWord();
     }
+
+    public void initialGame(){
+        setLife(6);
+    }
 }

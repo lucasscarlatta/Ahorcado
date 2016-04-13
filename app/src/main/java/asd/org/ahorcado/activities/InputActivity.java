@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import asd.org.ahorcado.R;
 import asd.org.ahorcado.exceptions.MatchLostException;
@@ -21,20 +22,27 @@ import asd.org.ahorcado.models.Match;
 
 public class InputActivity extends AppCompatActivity {
 
+    private static final int INTERVAL = 2000; //2 seconds
+
     private Match match = new Match();
+    private long firstClickTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_input);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
         match.initialGame();
-        TextView textViewWord = (TextView) findViewById(R.id.word);
-        textViewWord.setText(match.getNewWord());
-        ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBar);
-        progressBar.setMax(match.getLife());
-        progressBar.setProgress(match.getLife());
+        setInitialActivity();
+    }
+
+    @Override
+    public void onBackPressed(){
+        if (firstClickTime + INTERVAL > System.currentTimeMillis()){
+            super.onBackPressed();
+            startActivity(new Intent(this, MainActivity.class));
+        }else {
+            Toast.makeText(this, R.string.back_button, Toast.LENGTH_SHORT).show();
+        }
+        firstClickTime = System.currentTimeMillis();
     }
 
     public void guessLetter(View view) {
@@ -44,7 +52,7 @@ public class InputActivity extends AppCompatActivity {
         TextView textViewWord = (TextView) findViewById(R.id.word);
         textViewWord.setText(match.execute(letter));
         AlertDialog.Builder dialog = new AlertDialog.Builder(this);
-        dialog.setIcon(android.R.drawable.ic_dialog_alert);
+        dialog.setIcon(android.R.drawable.ic_dialog_info);
         try {
             if (match.afterExecute(letter)) {
                 createDialog(dialog, R.string.win_game, this);
@@ -56,7 +64,17 @@ public class InputActivity extends AppCompatActivity {
             progressBar.setProgress(match.getLife());
             setBackground();
         }
+    }
 
+    private void setInitialActivity(){
+        setContentView(R.layout.activity_input);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        TextView textViewWord = (TextView) findViewById(R.id.word);
+        textViewWord.setText(match.getNewWord());
+        ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBar);
+        progressBar.setMax(match.getLife());
+        progressBar.setProgress(match.getLife());
     }
 
     private void createDialog(AlertDialog.Builder dialog, int title, final InputActivity thisActivity) {

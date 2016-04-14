@@ -1,15 +1,18 @@
 /**
  * Muber 2016. Copyright © All rights reserved.
  */
-package asd.org.ahorcado;
+
+package asd.org.ahorcado.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+
+import asd.org.ahorcado.R;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -19,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
     }
 
     @Override
@@ -44,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void lunchGame(View view) {
-        startActivity(new Intent(this, GameActivity.class));
+
+        startActivity(new Intent(this, InputActivity.class));
     }
 }

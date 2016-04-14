@@ -38,6 +38,7 @@ public class InputActivity extends AppCompatActivity {
     public void onBackPressed(){
         if (firstClickTime + INTERVAL > System.currentTimeMillis()){
             super.onBackPressed();
+            finish();
             startActivity(new Intent(this, MainActivity.class));
         }else {
             Toast.makeText(this, R.string.back_button, Toast.LENGTH_SHORT).show();
@@ -81,11 +82,13 @@ public class InputActivity extends AppCompatActivity {
         dialog.setTitle(title)
                 .setPositiveButton(R.string.play_button, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
+                        finish();
                         startActivity(new Intent(thisActivity, InputActivity.class));
                     }
                 })
                 .setNegativeButton(R.string.cancel_button, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
+                        finish();
                         startActivity(new Intent(thisActivity, MainActivity.class));
                     }
                 }).show();

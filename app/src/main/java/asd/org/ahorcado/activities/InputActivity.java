@@ -18,13 +18,14 @@ import android.widget.Toast;
 
 import asd.org.ahorcado.R;
 import asd.org.ahorcado.exceptions.MatchLostException;
+import asd.org.ahorcado.models.AbstractMatch;
 import asd.org.ahorcado.models.Match;
 
 public class InputActivity extends AppCompatActivity {
 
     private static final int INTERVAL = 2000; //2 seconds
 
-    private Match match = new Match();
+    private AbstractMatch match = new Match();
     private long firstClickTime;
 
     @Override
@@ -35,12 +36,12 @@ public class InputActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onBackPressed(){
-        if (firstClickTime + INTERVAL > System.currentTimeMillis()){
+    public void onBackPressed() {
+        if (firstClickTime + INTERVAL > System.currentTimeMillis()) {
             super.onBackPressed();
             finish();
             startActivity(new Intent(this, MainActivity.class));
-        }else {
+        } else {
             Toast.makeText(this, R.string.back_button, Toast.LENGTH_SHORT).show();
         }
         firstClickTime = System.currentTimeMillis();
@@ -67,7 +68,7 @@ public class InputActivity extends AppCompatActivity {
         }
     }
 
-    private void setInitialActivity(){
+    private void setInitialActivity() {
         setContentView(R.layout.activity_input);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

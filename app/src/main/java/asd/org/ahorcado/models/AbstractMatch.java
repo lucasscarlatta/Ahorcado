@@ -7,7 +7,7 @@ import asd.org.ahorcado.exceptions.MatchLostException;
 
 public abstract class AbstractMatch {
 
-    private GuessWord guessWord = new GuessWord();
+    private AbstractGuess guessWord = new GuessWord();
     private int life;
     private User user;
     private boolean result;
@@ -52,5 +52,9 @@ public abstract class AbstractMatch {
 
     public String getNewWord() {
         return guessWord.getNewWord();
+    }
+
+    public void initialGame(){
+        setLife(6);
     }
 }

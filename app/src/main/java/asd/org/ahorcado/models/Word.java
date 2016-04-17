@@ -65,7 +65,7 @@ public class Word extends AbstractWord {
 
     public boolean isComplete() {
         for (int i = 0; i < getWord().toCharArray().length; i++) {
-            if (getWord().toCharArray()[i] != '_') {
+            if (getWord().toCharArray()[i] == '_') {
                 return false;
             }
         }

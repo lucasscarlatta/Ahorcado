@@ -7,4 +7,5 @@ public class Match extends AbstractMatch{
 
     private User user;
     private Word word;
+
 }

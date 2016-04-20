@@ -15,458 +15,6 @@
     tools:showIn="@layout/activity_input">
 
     <LinearLayout
-        android:id="@+id/linearLayout1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/linearLayout2"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true">
-
-        <Button
-            android:id="@+id/buttonA"
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:onClick="guessLetter"
-            android:text="A"
-            android:textAlignment="center"
-            android:textSize="23dp" />
-
-        <Button
-            android:id="@+id/buttonB"
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_toEndOf="@+id/buttonQ"
-            android:layout_toRightOf="@+id/buttonQ"
-            android:layout_weight="1"
-            android:onClick="guessLetter"
-            android:paddingLeft="1dp"
-            android:text="B"
-            android:textAlignment="center"
-            android:textSize="23dp" />
-
-        <Button
-            android:id="@+id/buttonC"
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_toEndOf="@+id/buttonB"
-            android:layout_toRightOf="@+id/buttonB"
-            android:layout_weight="1"
-            android:onClick="guessLetter"
-            android:paddingLeft="1dp"
-            android:text="C"
-            android:textAlignment="center"
-            android:textSize="23dp" />
-
-        <Button
-            android:id="@+id/buttonD"
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_toEndOf="@+id/buttonC"
-            android:layout_toRightOf="@+id/buttonC"
-            android:layout_weight="1"
-            android:onClick="guessLetter"
-            android:paddingLeft="1dp"
-            android:text="D"
-            android:textAlignment="center"
-            android:textSize="23dp" />
-
-        <Button
-            android:id="@+id/buttonE"
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_toEndOf="@+id/buttonD"
-            android:layout_toRightOf="@+id/buttonD"
-            android:layout_weight="1"
-            android:onClick="guessLetter"
-            android:paddingLeft="1dp"
-            android:text="E"
-            android:textAlignment="center"
-            android:textSize="23dp" />
-
-        <Button
-            android:id="@+id/buttonF"
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_toEndOf="@+id/buttonE"
-            android:layout_toRightOf="@+id/buttonE"
-            android:layout_weight="1"
-            android:onClick="guessLetter"
-            android:paddingLeft="1dp"
-            android:text="F"
-            android:textAlignment="center"
-            android:textSize="23dp" />
-
-        <Button
-            android:id="@+id/buttonG"
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_toEndOf="@+id/buttonF"
-            android:layout_toRightOf="@+id/buttonF"
-            android:layout_weight="1"
-            android:onClick="guessLetter"
-            android:paddingLeft="1dp"
-            android:text="G"
-            android:textAlignment="center"
-            android:textSize="23dp" />
-
-        <Button
-            android:id="@+id/buttonH"
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_toEndOf="@+id/buttonG"
-            android:layout_toRightOf="@+id/buttonG"
-            android:layout_weight="1"
-            android:onClick="guessLetter"
-            android:paddingLeft="1dp"
-            android:text="H"
-            android:textAlignment="center"
-            android:textSize="23dp" />
-
-        <Button
-            android:id="@+id/buttonI"
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_toEndOf="@+id/buttonH"
-            android:layout_toRightOf="@+id/buttonH"
-            android:layout_weight="1"
-            android:onClick="guessLetter"
-            android:paddingLeft="1dp"
-            android:text="I"
-            android:textAlignment="center"
-            android:textSize="23dp" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/linearLayout2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/linearLayout3"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true">
-
-        <Button
-            android:id="@+id/buttonJ"
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_weight="1"
-            android:onClick="guessLetter"
-            android:paddingLeft="1dp"
-            android:paddingTop="1dp"
-            android:text="J"
-            android:textAlignment="center"
-            android:textSize="23dp" />
-
-        <Button
-            android:id="@+id/buttonK"
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_toEndOf="@+id/buttonJ"
-            android:layout_toRightOf="@+id/buttonJ"
-            android:layout_weight="1"
-            android:onClick="guessLetter"
-            android:paddingLeft="1dp"
-            android:paddingTop="1dp"
-            android:text="K"
-            android:textAlignment="center"
-            android:textSize="23dp" />
-
-        <Button
-            android:id="@+id/buttonL"
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_toEndOf="@+id/buttonK"
-            android:layout_toRightOf="@+id/buttonK"
-            android:layout_weight="1"
-            android:onClick="guessLetter"
-            android:paddingLeft="1dp"
-            android:paddingTop="1dp"
-            android:text="L"
-            android:textAlignment="center"
-            android:textSize="23dp" />
-
-        <Button
-            android:id="@+id/buttonM"
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_toEndOf="@+id/buttonL"
-            android:layout_toRightOf="@+id/buttonL"
-            android:layout_weight="1"
-            android:onClick="guessLetter"
-            android:paddingLeft="1dp"
-            android:paddingTop="1dp"
-            android:text="M"
-            android:textAlignment="center"
-            android:textSize="23dp" />
-
-        <Button
-            android:id="@+id/buttonN"
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_toEndOf="@+id/buttonM"
-            android:layout_toRightOf="@+id/buttonM"
-            android:layout_weight="1"
-            android:onClick="guessLetter"
-            android:paddingLeft="1dp"
-            android:paddingTop="1dp"
-            android:text="N"
-            android:textAlignment="center"
-            android:textSize="23dp" />
-
-        <Button
-            android:id="@+id/buttonEnie"
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_toEndOf="@+id/buttonN"
-            android:layout_toRightOf="@+id/buttonN"
-            android:layout_weight="1"
-            android:onClick="guessLetter"
-            android:paddingLeft="1dp"
-            android:paddingTop="1dp"
-            android:text="Ñ"
-            android:textAlignment="center"
-            android:textSize="23dp" />
-
-        <Button
-            android:id="@+id/buttonO"
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_toEndOf="@+id/buttonEnie"
-            android:layout_toRightOf="@+id/buttonEnie"
-            android:layout_weight="1"
-            android:onClick="guessLetter"
-            android:paddingLeft="1dp"
-            android:paddingTop="1dp"
-            android:text="O"
-            android:textAlignment="center"
-            android:textSize="23dp" />
-
-        <Button
-            android:id="@+id/buttonP"
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_toEndOf="@+id/buttonO"
-            android:layout_toRightOf="@+id/buttonO"
-            android:layout_weight="1"
-            android:onClick="guessLetter"
-            android:paddingLeft="1dp"
-            android:paddingTop="1dp"
-            android:text="P"
-            android:textAlignment="center"
-            android:textSize="23dp" />
-
-        <Button
-            android:id="@+id/buttonQ"
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_toEndOf="@+id/buttonP"
-            android:layout_toRightOf="@+id/buttonP"
-            android:layout_weight="1"
-            android:onClick="guessLetter"
-            android:paddingLeft="1dp"
-            android:paddingTop="1dp"
-            android:text="Q"
-            android:textAlignment="center"
-            android:textSize="23dp" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/linearLayout3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
-
-        <Button
-            android:id="@+id/buttonR"
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_weight="1"
-            android:onClick="guessLetter"
-            android:paddingLeft="1dp"
-            android:paddingTop="1dp"
-            android:text="R"
-            android:textAlignment="center"
-            android:textSize="23dp" />
-
-        <Button
-            android:id="@+id/buttonS"
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_toEndOf="@+id/buttonR"
-            android:layout_toRightOf="@+id/buttonR"
-            android:layout_weight="1"
-            android:onClick="guessLetter"
-            android:paddingLeft="1dp"
-            android:paddingTop="1dp"
-            android:text="S"
-            android:textAlignment="center"
-            android:textSize="23dp" />
-
-        <Button
-            android:id="@+id/buttonT"
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_toEndOf="@+id/buttonS"
-            android:layout_toRightOf="@+id/buttonS"
-            android:layout_weight="1"
-            android:onClick="guessLetter"
-            android:paddingLeft="1dp"
-            android:paddingTop="1dp"
-            android:text="T"
-            android:textAlignment="center"
-            android:textSize="23dp" />
-
-        <Button
-            android:id="@+id/buttonU"
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_toEndOf="@+id/buttonT"
-            android:layout_toRightOf="@+id/buttonT"
-            android:layout_weight="1"
-            android:onClick="guessLetter"
-            android:paddingLeft="1dp"
-            android:paddingTop="1dp"
-            android:text="U"
-            android:textAlignment="center"
-            android:textSize="23dp" />
-
-        <Button
-            android:id="@+id/buttonV"
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_toEndOf="@+id/buttonU"
-            android:layout_toRightOf="@+id/buttonU"
-            android:layout_weight="1"
-            android:onClick="guessLetter"
-            android:paddingLeft="1dp"
-            android:paddingTop="1dp"
-            android:text="V"
-            android:textAlignment="center"
-            android:textSize="23dp" />
-
-        <Button
-            android:id="@+id/buttonW"
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_toEndOf="@+id/buttonV"
-            android:layout_toRightOf="@+id/buttonV"
-            android:layout_weight="1"
-            android:onClick="guessLetter"
-            android:paddingLeft="1dp"
-            android:paddingTop="1dp"
-            android:text="W"
-            android:textAlignment="center"
-            android:textSize="23dp" />
-
-        <Button
-            android:id="@+id/buttonX"
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_toEndOf="@+id/buttonW"
-            android:layout_toRightOf="@+id/buttonW"
-            android:layout_weight="1"
-            android:onClick="guessLetter"
-            android:paddingLeft="1dp"
-            android:paddingTop="1dp"
-            android:text="X"
-            android:textAlignment="center"
-            android:textSize="23dp" />
-
-        <Button
-            android:id="@+id/buttonY"
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_toEndOf="@+id/buttonX"
-            android:layout_toRightOf="@+id/buttonX"
-            android:layout_weight="1"
-            android:onClick="guessLetter"
-            android:paddingLeft="1dp"
-            android:paddingTop="1dp"
-            android:text="Y"
-            android:textAlignment="center"
-            android:textSize="23dp" />
-
-        <Button
-            android:id="@+id/buttonZ"
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_toEndOf="@+id/buttonY"
-            android:layout_toRightOf="@+id/buttonY"
-            android:layout_weight="1"
-            android:onClick="guessLetter"
-            android:paddingLeft="1dp"
-            android:paddingTop="1dp"
-            android:text="Z"
-            android:textAlignment="center"
-            android:textSize="23dp" />
-    </LinearLayout>
-
-    <LinearLayout
         android:id="@+id/linearLayout4"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -494,12 +42,398 @@
             style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignEnd="@+id/linearLayout4"
-            android:layout_alignParentTop="true"
-            android:layout_alignRight="@+id/linearLayout4"
             android:layout_gravity="left"
             android:progressTint="@color/colorRed" />
-
     </GridLayout>
+
+    <TableLayout
+        android:id="@+id/linearLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true">
+
+        <TableRow>
+
+            <Button
+                android:id="@+id/buttonA"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/colorGreen"
+                android:gravity="center"
+                android:onClick="guessLetter"
+                android:text="A"
+                android:textAlignment="center"
+                android:textSize="23sp" />
+
+            <Button
+                android:id="@+id/buttonB"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/colorGreen"
+                android:onClick="guessLetter"
+                android:paddingLeft="1dp"
+                android:text="B"
+                android:textAlignment="center"
+                android:textSize="23sp" />
+
+            <Button
+                android:id="@+id/buttonC"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/colorGreen"
+                android:onClick="guessLetter"
+                android:paddingLeft="1dp"
+                android:text="C"
+                android:textAlignment="center"
+                android:textSize="23sp" />
+
+            <Button
+                android:id="@+id/buttonD"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/colorGreen"
+                android:onClick="guessLetter"
+                android:paddingLeft="1dp"
+                android:text="D"
+                android:textAlignment="center"
+                android:textSize="23sp" />
+
+            <Button
+                android:id="@+id/buttonE"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/colorGreen"
+                android:onClick="guessLetter"
+                android:paddingLeft="1dp"
+                android:text="E"
+                android:textAlignment="center"
+                android:textSize="23sp" />
+
+            <Button
+                android:id="@+id/buttonF"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/colorGreen"
+                android:onClick="guessLetter"
+                android:paddingLeft="1dp"
+                android:text="F"
+                android:textAlignment="center"
+                android:textSize="23sp" />
+
+            <Button
+                android:id="@+id/buttonG"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/colorGreen"
+                android:onClick="guessLetter"
+                android:paddingLeft="1dp"
+                android:text="G"
+                android:textAlignment="center"
+                android:textSize="23sp" />
+
+            <Button
+                android:id="@+id/buttonH"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/colorGreen"
+                android:onClick="guessLetter"
+                android:paddingLeft="1dp"
+                android:text="H"
+                android:textAlignment="center"
+                android:textSize="23sp" />
+
+            <Button
+                android:id="@+id/buttonI"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/colorGreen"
+                android:onClick="guessLetter"
+                android:paddingLeft="1dp"
+                android:text="I"
+                android:textAlignment="center"
+                android:textSize="23sp" />
+        </TableRow>
+
+        <TableRow>
+
+            <Button
+                android:id="@+id/buttonJ"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/colorGreen"
+                android:onClick="guessLetter"
+                android:paddingLeft="1dp"
+                android:paddingTop="1dp"
+                android:text="J"
+                android:textAlignment="center"
+                android:textSize="23sp" />
+
+            <Button
+                android:id="@+id/buttonK"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/colorGreen"
+                android:onClick="guessLetter"
+                android:paddingLeft="1dp"
+                android:paddingTop="1dp"
+                android:text="K"
+                android:textAlignment="center"
+                android:textSize="23sp" />
+
+            <Button
+                android:id="@+id/buttonL"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/colorGreen"
+                android:onClick="guessLetter"
+                android:paddingLeft="1dp"
+                android:paddingTop="1dp"
+                android:text="L"
+                android:textAlignment="center"
+                android:textSize="23sp" />
+
+            <Button
+                android:id="@+id/buttonM"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/colorGreen"
+                android:onClick="guessLetter"
+                android:paddingLeft="1dp"
+                android:paddingTop="1dp"
+                android:text="M"
+                android:textAlignment="center"
+                android:textSize="23sp" />
+
+            <Button
+                android:id="@+id/buttonN"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/colorGreen"
+                android:onClick="guessLetter"
+                android:paddingLeft="1dp"
+                android:paddingTop="1dp"
+                android:text="N"
+                android:textAlignment="center"
+                android:textSize="23sp" />
+
+            <Button
+                android:id="@+id/buttonEnie"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/colorGreen"
+                android:onClick="guessLetter"
+                android:paddingLeft="1dp"
+                android:paddingTop="1dp"
+                android:text="Ñ"
+                android:textAlignment="center"
+                android:textSize="23sp" />
+
+            <Button
+                android:id="@+id/buttonO"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/colorGreen"
+                android:onClick="guessLetter"
+                android:paddingLeft="1dp"
+                android:paddingTop="1dp"
+                android:text="O"
+                android:textAlignment="center"
+                android:textSize="23sp" />
+
+            <Button
+                android:id="@+id/buttonP"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/colorGreen"
+                android:onClick="guessLetter"
+                android:paddingLeft="1dp"
+                android:paddingTop="1dp"
+                android:text="P"
+                android:textAlignment="center"
+                android:textSize="23sp" />
+
+            <Button
+                android:id="@+id/buttonQ"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/colorGreen"
+                android:onClick="guessLetter"
+                android:paddingLeft="1dp"
+                android:paddingTop="1dp"
+                android:text="Q"
+                android:textAlignment="center"
+                android:textSize="23sp" />
+        </TableRow>
+
+        <TableRow>
+
+            <Button
+                android:id="@+id/buttonR"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/colorGreen"
+                android:onClick="guessLetter"
+                android:paddingLeft="1dp"
+                android:paddingTop="1dp"
+                android:text="R"
+                android:textAlignment="center"
+                android:textSize="23sp" />
+
+            <Button
+                android:id="@+id/buttonS"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/colorGreen"
+                android:onClick="guessLetter"
+                android:paddingLeft="1dp"
+                android:paddingTop="1dp"
+                android:text="S"
+                android:textAlignment="center"
+                android:textSize="23sp" />
+
+            <Button
+                android:id="@+id/buttonT"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/colorGreen"
+                android:onClick="guessLetter"
+                android:paddingLeft="1dp"
+                android:paddingTop="1dp"
+                android:text="T"
+                android:textAlignment="center"
+                android:textSize="23sp" />
+
+            <Button
+                android:id="@+id/buttonU"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/colorGreen"
+                android:onClick="guessLetter"
+                android:paddingLeft="1dp"
+                android:paddingTop="1dp"
+                android:text="U"
+                android:textAlignment="center"
+                android:textSize="23sp" />
+
+            <Button
+                android:id="@+id/buttonV"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/colorGreen"
+                android:onClick="guessLetter"
+                android:paddingLeft="1dp"
+                android:paddingTop="1dp"
+                android:text="V"
+                android:textAlignment="center"
+                android:textSize="23sp" />
+
+            <Button
+                android:id="@+id/buttonW"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/colorGreen"
+                android:onClick="guessLetter"
+                android:paddingLeft="1dp"
+                android:paddingTop="1dp"
+                android:text="W"
+                android:textAlignment="center"
+                android:textSize="23sp" />
+
+            <Button
+                android:id="@+id/buttonX"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/colorGreen"
+                android:onClick="guessLetter"
+                android:paddingLeft="1dp"
+                android:paddingTop="1dp"
+                android:text="X"
+                android:textAlignment="center"
+                android:textSize="23sp" />
+
+            <Button
+                android:id="@+id/buttonY"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/colorGreen"
+                android:onClick="guessLetter"
+                android:paddingLeft="1dp"
+                android:paddingTop="1dp"
+                android:text="Y"
+                android:textAlignment="center"
+                android:textSize="23sp" />
+
+            <Button
+                android:id="@+id/buttonZ"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_toEndOf="@+id/buttonY"
+                android:layout_toRightOf="@+id/buttonY"
+                android:layout_weight="1"
+                android:background="@color/colorGreen"
+                android:onClick="guessLetter"
+                android:paddingLeft="1dp"
+                android:paddingTop="1dp"
+                android:text="Z"
+                android:textAlignment="center"
+                android:textSize="23sp" />
+        </TableRow>
+    </TableLayout>
 
 </RelativeLayout>

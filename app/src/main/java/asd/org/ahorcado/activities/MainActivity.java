@@ -47,8 +47,14 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void lunchGame(View view) {
+    @Override
+    public void onBackPressed() {
+        finish();
+        System.exit(0);
+    }
 
+    public void lunchGame(View view) {
+        finish();
         startActivity(new Intent(this, InputActivity.class));
     }
 }

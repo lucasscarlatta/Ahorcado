@@ -15,6 +15,8 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import java.util.HashMap;
+import java.util.Map;
 
 import asd.org.ahorcado.R;
 import asd.org.ahorcado.exceptions.MatchLostException;
@@ -68,6 +70,35 @@ public class InputActivity extends AppCompatActivity {
         }
     }
 
+    public void showOneLetter(View view) {
+        Button buttonHelp=(Button) view;
+        buttonHelp.setEnabled(false);
+        TextView textViewWord = (TextView) findViewById(R.id.word);
+        Map result=match.showOneLetter();
+        textViewWord.setText(result.get("word").toString());
+        char letter= ((char) result.get("letter"));
+        disableLetterHelped(letter);
+        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+        try {
+            if (match.afterExecute(letter)) {
+                createDialog(dialog, R.string.win_game, this);
+            }
+        } catch (MatchLostException e) {
+            createDialog(dialog, R.string.lost_game, this);
+        } finally {
+            ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBar);
+            progressBar.setProgress(match.getLife());
+            setBackground();
+        }
+
+    }
+
+    private void disableLetterHelped(char letter) {
+        int idButton = getResources().getIdentifier("button" + letter, "id", getPackageName());
+        Button buttonLetter=(Button) findViewById(idButton);
+        buttonLetter.setEnabled(false);
+    }
+
     private void setInitialActivity() {
         setContentView(R.layout.activity_input);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -90,7 +121,9 @@ public class InputActivity extends AppCompatActivity {
                 .setNegativeButton(R.string.cancel_button, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         finish();
-                        startActivity(new Intent(thisActivity, MainActivity.class));
+                        Intent i=new Intent(thisActivity, MainActivity.class);
+                        i.putExtra("hasWon","false");
+                        startActivity(i);
                     }
                 }).show();
     }

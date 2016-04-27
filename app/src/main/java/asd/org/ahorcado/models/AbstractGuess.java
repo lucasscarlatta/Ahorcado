@@ -1,5 +1,8 @@
 package asd.org.ahorcado.models;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public abstract class AbstractGuess {
 
     private Word word = new Word();
@@ -29,5 +32,14 @@ public abstract class AbstractGuess {
             sbWord.append("_");
         }
         return sbWord.toString();
+    }
+
+    public Map<String,String> showOneLetter(){
+        Map mapa=new HashMap<>();
+        char letter=this.word.obtainAValidLetter();
+        String word=processWord(letter);
+        mapa.put("word",word);
+        mapa.put("letter",letter);
+        return mapa;
     }
 }

@@ -3,6 +3,8 @@
  */
 package asd.org.ahorcado.models;
 
+import java.util.Map;
+
 import asd.org.ahorcado.exceptions.MatchLostException;
 
 public abstract class AbstractMatch {
@@ -48,6 +50,10 @@ public abstract class AbstractMatch {
             }
         }
         return this.guessWord.isComplete();
+    }
+
+    public Map<String,String> showOneLetter() {
+        return this.guessWord.showOneLetter();
     }
 
     public String getNewWord() {

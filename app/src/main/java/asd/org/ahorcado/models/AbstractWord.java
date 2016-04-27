@@ -39,5 +39,6 @@ public abstract class AbstractWord {
 
     protected abstract void exchangeLetters();
 
+
     public abstract boolean isComplete();
 }

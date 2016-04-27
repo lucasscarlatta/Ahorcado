@@ -3,6 +3,8 @@
  */
 package asd.org.ahorcado.models;
 
+import java.util.Random;
+
 public class Word extends AbstractWord {
 
     private int category;
@@ -61,6 +63,24 @@ public class Word extends AbstractWord {
                 }
             }
         }
+    }
+
+
+
+
+    protected char obtainAValidLetter() {
+        Random r=new Random();
+        char []wordChars=getWord().toString().toCharArray();
+        char[] originalWordChars = getOriginalWord().toCharArray();
+        int positionLetter;
+        if(!getWord().toString().equals(getOriginalWord().toString())) {
+            do {
+                positionLetter = r.nextInt((wordChars.length - 1) - 0);
+            } while (wordChars[positionLetter] != '_');
+        }else {
+            positionLetter = r.nextInt((wordChars.length - 1) - 0);
+        }
+        return originalWordChars[positionLetter];
     }
 
     public boolean isComplete() {

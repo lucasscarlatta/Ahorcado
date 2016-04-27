@@ -3,25 +3,32 @@
  */
 package asd.org.ahorcado.activities;
 
-import android.content.Intent;
+import android.graphics.Point;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import android.support.v4.app.FragmentActivity;
+import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.Toast;
 
 import asd.org.ahorcado.R;
+import asd.org.ahorcado.fragments.InputFragment;
+import asd.org.ahorcado.models.AbstractMatch;
+import asd.org.ahorcado.models.Match;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends FragmentActivity {
+
+    private static final int INTERVAL = 2000; //2 seconds
+
+    private AbstractMatch match = new Match();
+    private long firstClickTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
     }
 
     @Override
@@ -48,12 +55,49 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        finish();
-        System.exit(0);
+        if (firstClickTime + INTERVAL > System.currentTimeMillis()) {
+            super.onBackPressed();
+            finish();
+            System.exit(0);
+        } else {
+            Toast.makeText(this, R.string.back_button, Toast.LENGTH_SHORT).show();
+        }
+        firstClickTime = System.currentTimeMillis();
     }
 
     public void lunchGame(View view) {
-        finish();
-        startActivity(new Intent(this, InputActivity.class));
+        Button button = (Button) findViewById(R.id.play_game);
+        button.setVisibility(View.INVISIBLE);
+        //match.initialGame();
+        //setInitialActivity();
+        //UtilActivity.setBackground(view, match.getLife());
+        getFragmentManager().beginTransaction().add(R.id.content, new InputFragment()).commit();
     }
+
+    public void guessLetter(View view) {
+        Button button = (Button) view;
+        button.setEnabled(false);
+        char letter = button.getText().toString().toCharArray()[0];
+    }
+
+    private void setInitialActivity() {
+        InputFragment myFragment = (InputFragment) getFragmentManager().findFragmentById(R.id.fragment_container);
+        myFragment.setProgressBar(match.getLife(), match.getLife());
+    }
+
+    public int widthDisplay() {
+        return sizeDisplay().x;
+    }
+
+    public int heightDisplay() {
+        return sizeDisplay().y;
+    }
+
+    private Point sizeDisplay() {
+        Display display = getWindowManager().getDefaultDisplay();
+        Point tam = new Point();
+        display.getSize(tam);
+        return tam;
+    }
+
 }

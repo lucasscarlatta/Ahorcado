@@ -16,10 +16,14 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.Map;
+
 import asd.org.ahorcado.R;
+import asd.org.ahorcado.dal.dao.WordDAO;
 import asd.org.ahorcado.exceptions.MatchLostException;
 import asd.org.ahorcado.models.AbstractMatch;
 import asd.org.ahorcado.models.Match;
+import asd.org.ahorcado.models.Word;
 
 public class InputActivity extends AppCompatActivity {
 
@@ -33,6 +37,11 @@ public class InputActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         match.initialGame();
         setInitialActivity();
+
+        //TODO: Código para probar la DAL. Eliminar
+        WordDAO wordDAO = new WordDAO(this);
+        Map<Word, Integer> wordMap = wordDAO.GetWords();
+        int count = wordMap.size();
     }
 
     @Override

@@ -1,6 +1,7 @@
 /**
  * Muber 2016. Copyright © All rights reserved.
  */
+
 package asd.org.ahorcado.activities;
 
 import android.content.Intent;

@@ -19,7 +19,7 @@ import asd.org.ahorcado.BuildConfig;
  */
 public class DataBaseHelper extends SQLiteOpenHelper {
     private Context mycontext;
-    private static String DB_NAME = "(datbasename).sqlite";
+    private static String DB_NAME = "Ahorcado.db";
     private static String DB_PATH ="/data/data/"+ BuildConfig.APPLICATION_ID+"/databases/";
     public SQLiteDatabase myDataBase;
 

@@ -43,18 +43,25 @@ public class WordDAO {
 
     public Map<Word, Integer> GetWords() {
         Map<Word, Integer> result = new HashMap<>();
-        String query = "SELECT * FROM " + TABLE_WORD_NAME + " ORDER BY RANDOM() LIMIT " + WORD_LIMIT;
-        Cursor cursor = database.rawQuery(query, null);
+        try {
+            this.open();
+            String query = "SELECT * FROM " + TABLE_WORD_NAME + " ORDER BY RANDOM() LIMIT " + WORD_LIMIT;
+            Cursor cursor = database.rawQuery(query, null);
+            cursor.moveToFirst();
 
-        while (!cursor.isAfterLast()) {
-            Word word = new Word();
-            word.setOriginalWord(cursor.getString(1));
-            word.setSize(cursor.getInt(3));
-            result.put(word,0);
-            cursor.moveToNext();
+            while (!cursor.isAfterLast()) {
+                Word word = new Word();
+                word.setOriginalWord(cursor.getString(1));
+                word.setSize(cursor.getInt(3));
+                result.put(word,0);
+                cursor.moveToNext();
+            }
+            // make sure to close the cursor
+            cursor.close();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        // make sure to close the cursor
-        cursor.close();
+
         return result;
     }
 }

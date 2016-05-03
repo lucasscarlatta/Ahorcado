@@ -11,8 +11,11 @@ import asd.org.ahorcado.R;
 public class UtilActivity {
 
     protected static void setBackground(View view, int life) {
-        RelativeLayout relativeLayout = (RelativeLayout) view.findViewById(R.id.content);
+        RelativeLayout relativeLayout = (RelativeLayout) view.getRootView().findViewById(R.id.content);
         switch (life) {
+            case 6:
+                relativeLayout.setBackgroundResource(R.drawable.hangman1);
+                break;
             case 5:
                 relativeLayout.setBackgroundResource(R.drawable.hangman2);
                 break;

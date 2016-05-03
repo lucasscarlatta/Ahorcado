@@ -24,15 +24,15 @@
         android:text="@string/play_button" />
 
     <fragment
-        android:id="@+id/fragment_container"
-        android:name="asd.org.ahorcado.fragments.InputFragment"
-        android:layout_width="0dp"
-        android:layout_height="match_parent" />
+        android:id="@+id/WordFragment"
+        android:name="asd.org.ahorcado.fragments.WordFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"></fragment>
 
-    <ImageView
-        android:id="@+id/iv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="left|center_vertical" />
+    <fragment
+        android:id="@+id/InputFragment"
+        android:name="asd.org.ahorcado.fragments.InputFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"></fragment>
 
 </RelativeLayout>

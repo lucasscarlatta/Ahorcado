@@ -5,30 +5,33 @@ package asd.org.ahorcado.activities;
 
 import android.graphics.Point;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TableLayout;
 import android.widget.Toast;
 
 import asd.org.ahorcado.R;
-import asd.org.ahorcado.fragments.InputFragment;
-import asd.org.ahorcado.models.AbstractMatch;
-import asd.org.ahorcado.models.Match;
+import asd.org.ahorcado.fragments.WordFragment;
 
-public class MainActivity extends FragmentActivity {
+public class MainActivity extends AppCompatActivity {
 
-    private static final int INTERVAL = 2000; //2 seconds
+    private static int INTERVAL = 2000; //2 second
 
-    private AbstractMatch match = new Match();
     private long firstClickTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        TableLayout tl = (TableLayout) this.findViewById(R.id.tableLayout);
+        tl.setVisibility(View.INVISIBLE);
     }
 
     @Override
@@ -53,6 +56,15 @@ public class MainActivity extends FragmentActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    public void lunchGame(View view) {
+        Button button = (Button) findViewById(R.id.play_game);
+        button.setVisibility(View.INVISIBLE);
+        TableLayout tl = (TableLayout) this.findViewById(R.id.tableLayout);
+        tl.setVisibility(View.VISIBLE);
+        WordFragment f = (WordFragment) getFragmentManager().findFragmentById(R.id.WordFragment);
+        f.updateImage("_______", widthDisplay(), heightDisplay());
+    }
+
     @Override
     public void onBackPressed() {
         if (firstClickTime + INTERVAL > System.currentTimeMillis()) {
@@ -65,31 +77,19 @@ public class MainActivity extends FragmentActivity {
         firstClickTime = System.currentTimeMillis();
     }
 
-    public void lunchGame(View view) {
-        Button button = (Button) findViewById(R.id.play_game);
-        button.setVisibility(View.INVISIBLE);
-        //match.initialGame();
-        //setInitialActivity();
-        //UtilActivity.setBackground(view, match.getLife());
-        getFragmentManager().beginTransaction().add(R.id.content, new InputFragment()).commit();
-    }
-
     public void guessLetter(View view) {
         Button button = (Button) view;
         button.setEnabled(false);
         char letter = button.getText().toString().toCharArray()[0];
+        WordFragment f = (WordFragment) getFragmentManager().findFragmentById(R.id.WordFragment);
+        f.updateImage(letter + "_______", widthDisplay(), heightDisplay());
     }
 
-    private void setInitialActivity() {
-        InputFragment myFragment = (InputFragment) getFragmentManager().findFragmentById(R.id.fragment_container);
-        myFragment.setProgressBar(match.getLife(), match.getLife());
-    }
-
-    public int widthDisplay() {
+    private int widthDisplay() {
         return sizeDisplay().x;
     }
 
-    public int heightDisplay() {
+    private int heightDisplay() {
         return sizeDisplay().y;
     }
 

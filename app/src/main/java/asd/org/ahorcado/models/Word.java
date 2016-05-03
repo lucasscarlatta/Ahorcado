@@ -18,12 +18,12 @@ public class Word extends AbstractWord {
 
     public boolean containsLetter(char letter) {
         boolean result = false;
-        char[] charWord = getOriginalWord().toCharArray();
+        /**char[] charWord = getOriginalWord().toCharArray();
         for (int i = 0; i < charWord.length; i++) {
             if (letter == charWord[i]) {
                 result = true;
             }
-        }
+        }*/
         return result;
     }
 
@@ -64,12 +64,13 @@ public class Word extends AbstractWord {
     }
 
     public boolean isComplete() {
-        for (int i = 0; i < getWord().toCharArray().length; i++) {
+        return false;
+        /**for (int i = 0; i < getWord().toCharArray().length; i++) {
             if (getWord().toCharArray()[i] == '_') {
                 return false;
             }
         }
-        return true;
+        return true;*/
     }
 
 }

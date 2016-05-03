@@ -1,6 +1,7 @@
 /**
  * Muber 2016. Copyright © All rights reserved.
  */
+
 package asd.org.ahorcado.activities;
 
 import android.graphics.Point;
@@ -15,8 +16,12 @@ import android.widget.Button;
 import android.widget.TableLayout;
 import android.widget.Toast;
 
+import java.util.Map;
+
 import asd.org.ahorcado.R;
+import asd.org.ahorcado.dal.dao.WordDAO;
 import asd.org.ahorcado.fragments.WordFragment;
+import asd.org.ahorcado.models.Word;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -57,6 +62,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void lunchGame(View view) {
+        WordDAO wordDAO = new WordDAO(this);
+        Map<Word, Integer> wordMap = wordDAO.GetWords();
         Button button = (Button) findViewById(R.id.play_game);
         button.setVisibility(View.INVISIBLE);
         TableLayout tl = (TableLayout) this.findViewById(R.id.tableLayout);

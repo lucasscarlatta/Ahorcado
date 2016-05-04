@@ -7,29 +7,58 @@ import asd.org.ahorcado.interfaces.HangmanWord;
 
 public class Word implements HangmanWord {
 
+    private Long id;
     private String word;
     private int category;
+    private int size;
 
-    public Word(String word) { this.word = word; }
+    public Word(String word) {
+        this.word = word;
+        this.size = word.length();
+    }
 
-    public void setWord(String word) { this.word = word.toUpperCase(); }
+    public Long getId() {
+        return id;
+    }
 
-    public String getWord() { return this.word; }
+    public void setId(Long id) {
+        this.id = id;
+    }
 
+    public void setWord(String word) {
+        this.word = word.toUpperCase();
+    }
 
-    public void markLetter(char letter) {
-        char[] charWord = this.word.toCharArray();
-        for (int i = 0; i < charWord.length; i++) {
-            if (letter == charWord[i]) {
-                setMark(i);
-            }
-        }
+    public String getWord() {
+        return this.word;
+    }
+
+    public int getCategory() {
+        return category;
+    }
+
+    public void setCategory(int category) {
+        this.category = category;
+    }
+
+    public int getSize() {
+        return size;
+    }
+
+    public void setSize(int size) {
+        this.size = size;
+    }
+
+    public void showLetter(int position, char letter) {
+        StringBuilder sb = new StringBuilder(this.word);
+        sb.setCharAt(position, letter);
+        this.word = sb.toString();
     }
 
     public boolean containsLetter(char letter) {
         boolean result = false;
         char[] charWord = this.word.toCharArray();
-        for (int i = 0; i < charWord.length; i++) {
+        for (int i = 0; i < size; i++) {
             if (letter == charWord[i]) {
                 result = true;
             }
@@ -44,11 +73,20 @@ public class Word implements HangmanWord {
     }
 
     public boolean isComplete() {
-        for (int i = 0; i < this.word.toCharArray().length; i++) {
-            if (this.word.toCharArray()[i] != HangmanWord.MARK) {
+        for (int i = 0; i < size; i++) {
+            if (getWord().toCharArray()[i] == '_') {
                 return false;
             }
         }
         return true;
     }
+
+    public void setBlankWord() {
+        StringBuilder sbWord = new StringBuilder();
+        for (int i = 0; i < size; i++) {
+            sbWord.append(HangmanWord.MARK);
+        }
+        this.word = sbWord.toString();
+    }
+
 }

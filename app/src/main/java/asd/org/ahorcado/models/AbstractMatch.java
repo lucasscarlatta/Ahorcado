@@ -3,7 +3,7 @@
  */
 package asd.org.ahorcado.models;
 
-import asd.org.ahorcado.exceptions.MatchLostException;
+import asd.org.ahorcado.exceptions.LostLifeException;
 
 public abstract class AbstractMatch {
 
@@ -13,9 +13,13 @@ public abstract class AbstractMatch {
     private User user;
     private boolean result;
 
-    public int getLife() { return life; }
+    public int getLife() {
+        return life;
+    }
 
-    public void setLife(int life) { this.life = life; }
+    public void setLife(int life) {
+        this.life = life;
+    }
 
     public User getUser() {
         return user;
@@ -33,17 +37,24 @@ public abstract class AbstractMatch {
         this.result = result;
     }
 
-    public String execute(char letter) {
-        return this.guesser.processWord(letter);
+    public void execute(char letter) {
+        try {
+            this.guesser.processWord(letter);
+        } catch (LostLifeException e) {
+            --life;
+        }
     }
 
-    public boolean afterExecute(char letter) throws Exception {
-        if (!this.guesser.guessLetter(letter)) {
-            --life;
-            if (life == 0) {
-                throw new MatchLostException();
-            }
-        }
-        return this.guesser.isComplete();
+    public void initialGame(Word word) {
+        guesser = new Guesser(word);
     }
+
+    public String obtainPartialWord() {
+        return guesser.word.getWord();
+    }
+
+    public boolean isComplete() {
+        return guesser.word.isComplete();
+    }
+
 }

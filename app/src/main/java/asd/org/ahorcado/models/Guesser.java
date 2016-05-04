@@ -1,57 +1,33 @@
+/**
+ * Muber 2016. Copyright © All rights reserved.
+ */
 package asd.org.ahorcado.models;
 
-
+import asd.org.ahorcado.exceptions.LostLifeException;
+import asd.org.ahorcado.helpers.StringHelper;
 import asd.org.ahorcado.interfaces.HangmanWord;
 
 public class Guesser extends AbstractGuess {
 
-    public Guesser() {
-        this.originalWord = new Word("Activity");
-        this.word = new Word("Activity");
-    }
-
-    public Guesser(HangmanWord originalWord, HangmanWord word) {
+    public Guesser(HangmanWord originalWord) {
         this.originalWord = originalWord;
-        this.word = word;
+        this.word = new Word(originalWord.getWord());
+        this.word.setBlankWord();
     }
 
-    public void exchangeLetters() {
-        char[] wordChars = word.getWord().toCharArray();
-        char[] originalWordChars = this.originalWord.getWord().toCharArray();
-        for (int i = 0; i < wordChars.length; i++) {
-            if (wordChars[i] != originalWordChars[i]) {
-                StringBuilder word = new StringBuilder(this.word.getWord());
-                word.setCharAt(i, originalWordChars[i]);
-                this.word.setWord(word.toString());
-            } else {
-                this.word.setMark(i);
+    public void exchangeLetters(char letter) throws LostLifeException {
+        boolean guessed = false;
+        String originalWordString = this.originalWord.getWord();
+        char[] clearWord = StringHelper.clearWord(originalWordString).toCharArray();
+        for (int i = 0; i < originalWordString.length(); i++) {
+            if (letter == clearWord[i]) {
+                guessed = true;
+                this.word.showLetter(i, originalWordString.charAt(i));
             }
         }
-    }
-
-    public void inverseLetter() {
-        if(!this.word.getWord().equals(this.originalWord.getWord())){
-            char[] wordChars = this.word.getWord().toCharArray();
-            char[] originalWordChars = this.originalWord.getWord().toCharArray();
-            for(int i = 0; i<wordChars.length;i++){
-                if(wordChars[i] == '_'){
-                    StringBuilder word = new StringBuilder(this.word.getWord());
-                    word.setCharAt(i, originalWordChars[i]);
-                    this.word.setWord(word.toString());
-                } else {
-                    this.word.setMark(i);
-                }
-            }
+        if (!guessed) {
+            throw new LostLifeException();
         }
-    }
-
-    public String getNewWord() {
-        StringBuilder sbWord = new StringBuilder();
-        int size = this.word.getWord().length();
-        for (int i = 0; i < size; i++){
-            sbWord.append("_");
-        }
-        return sbWord.toString();
     }
 
 }

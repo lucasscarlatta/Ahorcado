@@ -1,13 +1,14 @@
+/**
+ * Muber 2016. Copyright © All rights reserved.
+ */
 package asd.org.ahorcado.dal.dao;
 
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.location.Criteria;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,9 +16,6 @@ import java.util.Map;
 import asd.org.ahorcado.dal.DataBaseHelper;
 import asd.org.ahorcado.models.Word;
 
-/**
- * Created by Huber on 17/04/2016.
- */
 public class WordDAO {
 
     private SQLiteDatabase database;
@@ -41,19 +39,20 @@ public class WordDAO {
         dbHelper.close();
     }
 
-    public Map<Word, Integer> GetWords() {
+    public Map<Word, Integer> getWords(List<Long> wordIdList) {
         Map<Word, Integer> result = new HashMap<>();
         try {
             this.open();
-            String query = "SELECT * FROM " + TABLE_WORD_NAME + " ORDER BY RANDOM() LIMIT " + WORD_LIMIT;
+            String notInIds = wordIdList.size() > 0 ? " WHERE ID NOT IN (" + convertList(wordIdList) + ")" : "";
+            String query = "SELECT * FROM " + TABLE_WORD_NAME + notInIds + " ORDER BY RANDOM() LIMIT " + WORD_LIMIT;
             Cursor cursor = database.rawQuery(query, null);
             cursor.moveToFirst();
 
             while (!cursor.isAfterLast()) {
-                Word word = new Word();
-                word.setOriginalWord(cursor.getString(1));
+                Word word = new Word(cursor.getString(1));
+                word.setId(cursor.getLong(0));
                 word.setSize(cursor.getInt(3));
-                result.put(word,0);
+                result.put(word, 0);
                 cursor.moveToNext();
             }
             // make sure to close the cursor
@@ -61,7 +60,19 @@ public class WordDAO {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
         return result;
+    }
+
+    private String convertList(List<Long> list) {
+        StringBuilder sb = new StringBuilder();
+        boolean first = true;
+        for (Long parameter : list) {
+            if (!first) {
+                sb.append(",");
+            }
+            first = false;
+            sb.append(parameter);
+        }
+        return sb.toString();
     }
 }

@@ -3,5 +3,12 @@
     <string name="app_name">Ahorcado</string>
     <string name="action_settings">Configuraciones</string>
     <string name="play_button">Jugar</string>
+    <string name="cancel_button">Cancelar</string>
+    <string name="menu_button">Menú</string>
+    <string name="title_activity_input">Ahorcado</string>
+    <string name="win_game">Ganaste</string>
+    <string name="lost_game">Perdiste</string>
+    <string name="back_button">"Vuelve a presionar para salir de la partida"</string>
+    <string name="word_game">La palabra es </string>
 </resources>
 

@@ -1,6 +1,7 @@
 /**
  * Muber 2016. Copyright © All rights reserved.
  */
+
 package asd.org.ahorcado.activities;
 
 import android.content.Intent;
@@ -46,7 +47,14 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onBackPressed() {
+        finish();
+        System.exit(0);
+    }
+
     public void lunchGame(View view) {
+        finish();
         startActivity(new Intent(this, InputActivity.class));
     }
 }

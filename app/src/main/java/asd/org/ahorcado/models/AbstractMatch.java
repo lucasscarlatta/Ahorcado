@@ -8,6 +8,7 @@ import asd.org.ahorcado.exceptions.MatchLostException;
 public abstract class AbstractMatch {
 
     private AbstractGuess guesser;
+
     private int life;
     private User user;
     private boolean result;
@@ -45,5 +46,4 @@ public abstract class AbstractMatch {
         }
         return this.guesser.isComplete();
     }
-
 }

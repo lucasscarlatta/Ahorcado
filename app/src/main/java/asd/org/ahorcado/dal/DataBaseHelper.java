@@ -1,3 +1,6 @@
+/**
+ * Muber 2016. Copyright © All rights reserved.
+ */
 package asd.org.ahorcado.dal;
 
 import android.content.Context;
@@ -14,18 +17,15 @@ import java.sql.SQLException;
 
 import asd.org.ahorcado.BuildConfig;
 
-/**
- * Created by Huber on 17/04/2016.
- */
 public class DataBaseHelper extends SQLiteOpenHelper {
     private Context mycontext;
     private static String DB_NAME = "Ahorcado.db";
-    private static String DB_PATH ="/data/data/"+ BuildConfig.APPLICATION_ID+"/databases/";
+    private static String DB_PATH = "/data/data/" + BuildConfig.APPLICATION_ID + "/databases/";
     public SQLiteDatabase myDataBase;
 
     public DataBaseHelper(Context context) throws IOException {
-        super(context,DB_NAME,null,1);
-        this.mycontext=context;
+        super(context, DB_NAME, null, 1);
+        this.mycontext = context;
         boolean dbexist = checkdatabase();
         if (dbexist) {
             System.out.println("Database exists");
@@ -42,13 +42,13 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     public void createdatabase() throws IOException {
         boolean dbexist = checkdatabase();
-        if(dbexist) {
+        if (dbexist) {
             System.out.println(" Database exists.");
         } else {
             this.getReadableDatabase();
             try {
                 copydatabase();
-            } catch(IOException e) {
+            } catch (IOException e) {
                 throw new Error("Error copying database");
             }
         }
@@ -61,7 +61,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             String myPath = DB_PATH + DB_NAME;
             File dbfile = new File(myPath);
             checkdb = dbfile.exists();
-        } catch(SQLiteException e) {
+        } catch (SQLiteException e) {
             System.out.println("Database doesn't exist");
         }
         return checkdb;
@@ -80,8 +80,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         // transfer byte to inputfile to outputfile
         byte[] buffer = new byte[1024];
         int length;
-        while ((length = myinput.read(buffer))>0) {
-            myoutput.write(buffer,0,length);
+        while ((length = myinput.read(buffer)) > 0) {
+            myoutput.write(buffer, 0, length);
         }
 
         //Close the streams
@@ -97,7 +97,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     }
 
     public synchronized void close() {
-        if(myDataBase != null) {
+        if (myDataBase != null) {
             myDataBase.close();
         }
         super.close();

@@ -1,7 +1,6 @@
 /**
  * Muber 2016. Copyright © All rights reserved.
  */
-
 package asd.org.ahorcado.activities;
 
 import android.graphics.Point;
@@ -16,14 +15,14 @@ import android.widget.Button;
 import android.widget.TableLayout;
 import android.widget.Toast;
 
-import java.util.Map;
-
 import asd.org.ahorcado.R;
-import asd.org.ahorcado.dal.dao.WordDAO;
+import asd.org.ahorcado.controller.GameController;
+import asd.org.ahorcado.exceptions.LostLifeException;
 import asd.org.ahorcado.fragments.WordFragment;
-import asd.org.ahorcado.models.Word;
 
 public class MainActivity extends AppCompatActivity {
+
+    private GameController gameController;
 
     private static int INTERVAL = 2000; //2 second
 
@@ -37,39 +36,36 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         TableLayout tl = (TableLayout) this.findViewById(R.id.tableLayout);
         tl.setVisibility(View.INVISIBLE);
+        gameController = new GameController(this);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
     public void lunchGame(View view) {
-        WordDAO wordDAO = new WordDAO(this);
-        Map<Word, Integer> wordMap = wordDAO.GetWords();
+        gameController.newMatch();
         Button button = (Button) findViewById(R.id.play_game);
         button.setVisibility(View.INVISIBLE);
         TableLayout tl = (TableLayout) this.findViewById(R.id.tableLayout);
         tl.setVisibility(View.VISIBLE);
         WordFragment f = (WordFragment) getFragmentManager().findFragmentById(R.id.WordFragment);
-        f.updateImage("_______", widthDisplay(), heightDisplay());
+        f.updateImage(gameController.obtainPartialWord(), widthDisplay(), heightDisplay());
+        try {
+            UtilActivity.setBackground(view, gameController.getRemainingLives());
+        } catch (LostLifeException e) {
+        }
     }
 
     @Override
@@ -88,8 +84,19 @@ public class MainActivity extends AppCompatActivity {
         Button button = (Button) view;
         button.setEnabled(false);
         char letter = button.getText().toString().toCharArray()[0];
+        gameController.execute(letter);
         WordFragment f = (WordFragment) getFragmentManager().findFragmentById(R.id.WordFragment);
-        f.updateImage(letter + "_______", widthDisplay(), heightDisplay());
+        f.updateImage(gameController.obtainPartialWord(), widthDisplay(), heightDisplay());
+        if (gameController.isComplete()) {
+            //WIN
+        }
+        int remainingLives = 0;
+        try {
+            remainingLives = gameController.getRemainingLives();
+        } catch (LostLifeException e) {
+        } finally {
+            UtilActivity.setBackground(view, remainingLives);
+        }
     }
 
     private int widthDisplay() {

@@ -1,3 +1,6 @@
+/**
+ * Muber 2016. Copyright © All rights reserved.
+ */
 package asd.org.ahorcado.fragments;
 
 import android.app.Fragment;
@@ -12,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import asd.org.ahorcado.R;
+import asd.org.ahorcado.interfaces.HangmanWord;
 
 public class WordFragment extends Fragment {
 
@@ -21,13 +25,12 @@ public class WordFragment extends Fragment {
     public static int LIMIT_OFFSET = 40;
     public static int WIDTH_LINE = 8;
 
-    private int offset = 50;
+    private int offset = 80;
     private int longLine = 100;
 
     ImageView imageView;
 
     public WordFragment() {
-
     }
 
     @Override
@@ -65,16 +68,16 @@ public class WordFragment extends Fragment {
         float start = startPaint(widthDisplay, wordChar.length);
         for (int i = 0; i < wordChar.length; i++) {
             float nextLine = start + longLine;
-            if (wordChar[i] == '_') {
+            if (wordChar[i] == HangmanWord.MARK) {
                 //canvas.drawLine(startX, startY, stopX, stopY, paint)
                 canvas.drawLine(start, heightDisplay / 2, nextLine, heightDisplay / 2, paint);
             } else {
                 float startWord = start;
-                if (wordChar[i] == 'I') {
+                if (wordChar[i] == HangmanWord.LETTER_I) {
                     startWord += longLine / 2;
                 }
                 paint.setTextScaleX(2f);
-                paint.setTextSize(80);
+                paint.setTextSize(offset);
                 canvas.drawText(String.valueOf(wordChar[i]), startWord, heightDisplay / DIVIDER, paint);
             }
             start = nextLine + offset;
@@ -82,14 +85,21 @@ public class WordFragment extends Fragment {
     }
 
     private float startPaint(int widthDisplay, int wordSize) {
-        boolean draw = true;
-        float middleDisplay = widthDisplay / DIVIDER;
+        float lengthWord = (longLine + offset) * (wordSize);
         float startDraw = START_DRAW;
-        while (draw) {
+        boolean calculateStart;
+        if (lengthWord < widthDisplay) {
+            calculateStart = false;
+            startDraw = (widthDisplay - lengthWord) / DIVIDER;
+        } else {
+            calculateStart = true;
+        }
+        float middleDisplay = widthDisplay / DIVIDER;
+        while (calculateStart) {
             startDraw = (longLine + offset) * (wordSize / DIVIDER);
             if (startDraw < middleDisplay) {
-                draw = false;
-                startDraw = middleDisplay - startDraw;
+                calculateStart = false;
+                startDraw = widthDisplay / DIVIDER - startDraw;
             } else {
                 offset -= LESS_LINE;
                 if (offset == LIMIT_OFFSET) {

@@ -3,12 +3,22 @@
  */
 package asd.org.ahorcado.models;
 
-public class Word extends AbstractWord {
+import asd.org.ahorcado.interfaces.HangmanWord;
 
+public class Word implements HangmanWord {
+
+    private String word;
     private int category;
 
-    public void setMyLetter(char letter) {
-        char[] charWord = getOriginalWord().toCharArray();
+    public Word(String word) { this.word = word; }
+
+    public void setWord(String word) { this.word = word.toUpperCase(); }
+
+    public String getWord() { return this.word; }
+
+
+    public void markLetter(char letter) {
+        char[] charWord = this.word.toCharArray();
         for (int i = 0; i < charWord.length; i++) {
             if (letter == charWord[i]) {
                 setMark(i);
@@ -18,7 +28,7 @@ public class Word extends AbstractWord {
 
     public boolean containsLetter(char letter) {
         boolean result = false;
-        char[] charWord = getOriginalWord().toCharArray();
+        char[] charWord = this.word.toCharArray();
         for (int i = 0; i < charWord.length; i++) {
             if (letter == charWord[i]) {
                 result = true;
@@ -27,49 +37,18 @@ public class Word extends AbstractWord {
         return result;
     }
 
-    protected void setMark(int position) {
-        StringBuilder word = new StringBuilder(getWord());
-        word.setCharAt(position, '_');
-        setWord(word.toString());
-    }
-
-    public void exchangeLetters() {
-        char[] wordChars = getWord().toString().toCharArray();
-        char[] originalWordChars = getOriginalWord().toCharArray();
-        for (int i = 0; i < wordChars.length; i++) {
-            if (wordChars[i] != originalWordChars[i]) {
-                StringBuilder word = new StringBuilder(getWord());
-                word.setCharAt(i, originalWordChars[i]);
-                setWord(word.toString());
-            } else {
-                setMark(i);
-            }
-        }
-    }
-
-    public void inverseLetter(){
-        if(!getWord().toString().equals(getOriginalWord().toString())){
-            char[] wordChars = getWord().toString().toCharArray();
-            char[] originalWordChars = getOriginalWord().toCharArray();
-            for(int i = 0; i<wordChars.length;i++){
-                if(wordChars[i] == '_'){
-                    StringBuilder word = new StringBuilder(getWord());
-                    word.setCharAt(i, originalWordChars[i]);
-                    setWord(word.toString());
-                } else {
-                    setMark(i);
-                }
-            }
-        }
+    public void setMark(int position) {
+        StringBuilder word = new StringBuilder(this.word);
+        word.setCharAt(position, HangmanWord.MARK);
+        this.word = (word.toString());
     }
 
     public boolean isComplete() {
-        for (int i = 0; i < getWord().toCharArray().length; i++) {
-            if (getWord().toCharArray()[i] == '_') {
+        for (int i = 0; i < this.word.toCharArray().length; i++) {
+            if (this.word.toCharArray()[i] != HangmanWord.MARK) {
                 return false;
             }
         }
         return true;
     }
-
 }

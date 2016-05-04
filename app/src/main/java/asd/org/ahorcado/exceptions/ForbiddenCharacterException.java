@@ -3,6 +3,6 @@
  */
 package asd.org.ahorcado.exceptions;
 
-public class MatchLostException extends Exception {
+public class ForbiddenCharacterException extends Exception {
 
 }

@@ -1,6 +1,6 @@
 /**
  * Muber 2016. Copyright © All rights reserved.
- */
+
 package asd.org.ahorcado.activities;
 
 import android.app.AlertDialog;
@@ -152,4 +152,4 @@ public class InputActivity extends AppCompatActivity {
         }
     }
 
-}
+}*/

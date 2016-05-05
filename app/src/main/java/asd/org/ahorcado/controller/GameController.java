@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 import asd.org.ahorcado.dal.dao.WordDAO;
-import asd.org.ahorcado.exceptions.LostLifeException;
+import asd.org.ahorcado.exceptions.MatchLostException;
 import asd.org.ahorcado.models.AbstractMatch;
 import asd.org.ahorcado.models.Match;
 import asd.org.ahorcado.models.Word;
@@ -70,11 +70,15 @@ public class GameController {
         return match.isComplete();
     }
 
-    public int getRemainingLives() throws LostLifeException {
-        if (match.getLife() != 0){
-            return match.getLife();
+    public int getRemainingLives() throws MatchLostException {
+        if (match.getLife() == 0){
+            throw new MatchLostException();
         } else {
-            throw new LostLifeException();
+            return match.getLife();
         }
+    }
+
+    public String originalWord() {
+        return match.getOriginalWord();
     }
 }

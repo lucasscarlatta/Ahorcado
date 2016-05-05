@@ -57,4 +57,7 @@ public abstract class AbstractMatch {
         return guesser.word.isComplete();
     }
 
+    public String getOriginalWord() {
+        return guesser.originalWord.getWord();
+    }
 }

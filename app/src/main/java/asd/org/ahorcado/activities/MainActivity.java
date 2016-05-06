@@ -8,7 +8,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Point;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Display;
@@ -43,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
 
         TableLayout tl = (TableLayout) this.findViewById(R.id.tableLayout);
         tl.setVisibility(View.INVISIBLE);
-        TableLayout tHelp = (TableLayout) this.findViewById(R.id.tableHelpLayout);
+        TableLayout tHelp=(TableLayout)this.findViewById(R.id.tableHelpLayout);
         tHelp.setVisibility(View.INVISIBLE);
         gameController = new GameController(this);
     }
@@ -72,6 +71,9 @@ public class MainActivity extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction().replace(R.id.InputFragment, new InputFragment()).commit();
         TableLayout tHelp = (TableLayout) this.findViewById(R.id.tableHelpLayout);
         tHelp.setVisibility(View.VISIBLE);
+        HelpFragment hf= (HelpFragment)getSupportFragmentManager().findFragmentById(R.id.HelpFragment);
+        int coins=gameController.getCoins();
+        hf.setCoinsToView(coins);
         WordFragment f = (WordFragment) getFragmentManager().findFragmentById(R.id.WordFragment);
         f.updateImage(gameController.obtainPartialWord(), widthDisplay(), heightDisplay());
         try {
@@ -139,15 +141,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void showOneLetter(View view) {
-        HelpFragment hf = (HelpFragment) getSupportFragmentManager().findFragmentById(R.id.HelpFragment);
-        hf.enableHelp(gameController.getCoins() == 0);
-        char letter = gameController.showOneLetter();
+        HelpFragment hf= (HelpFragment)getSupportFragmentManager().findFragmentById(R.id.HelpFragment);
+        char letter=gameController.showOneLetter();
+        int coins=gameController.getCoins();
+        hf.enableHelp(coins!=0);
+        hf.setCoinsToView(coins);
         disableLetterHelped(letter);
         WordFragment f = (WordFragment) getFragmentManager().findFragmentById(R.id.WordFragment);
         f.updateImage(gameController.obtainPartialWord(), widthDisplay(), heightDisplay());
-        if (gameController.isComplete()) {
-            //WIN
-        }
+        resultGame(view);
     }
 
     private void disableLetterHelped(char letter) {

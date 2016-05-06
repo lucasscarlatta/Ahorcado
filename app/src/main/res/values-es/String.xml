@@ -10,5 +10,6 @@
     <string name="lost_game">Perdiste</string>
     <string name="back_button">"Vuelve a presionar para salir de la partida"</string>
     <string name="word_game">La palabra es </string>
+    <string name="help_button">Ayuda</string>
 </resources>
 

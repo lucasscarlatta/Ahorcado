@@ -77,4 +77,12 @@ public class GameController {
             throw new LostLifeException();
         }
     }
+
+    public int getCoins(){
+        return match.getCoin();
+    }
+
+    public char showOneLetter(){
+       return this.match.showOneLetter();
+    }
 }

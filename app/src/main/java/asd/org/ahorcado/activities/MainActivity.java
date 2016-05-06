@@ -5,6 +5,7 @@ package asd.org.ahorcado.activities;
 
 import android.graphics.Point;
 import android.os.Bundle;
+import android.widget.Button;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Display;
@@ -13,11 +14,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TableLayout;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.Map;
 
 import asd.org.ahorcado.R;
 import asd.org.ahorcado.controller.GameController;
 import asd.org.ahorcado.exceptions.LostLifeException;
+import asd.org.ahorcado.fragments.HelpFragment;
 import asd.org.ahorcado.fragments.WordFragment;
 
 public class MainActivity extends AppCompatActivity {
@@ -34,14 +39,19 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
         TableLayout tl = (TableLayout) this.findViewById(R.id.tableLayout);
         tl.setVisibility(View.INVISIBLE);
+        TableLayout tHelp=(TableLayout)this.findViewById(R.id.tableHelpLayout);
+        tHelp.setVisibility(View.INVISIBLE);
         gameController = new GameController(this);
+
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
+
         return true;
     }
 
@@ -60,6 +70,8 @@ public class MainActivity extends AppCompatActivity {
         button.setVisibility(View.INVISIBLE);
         TableLayout tl = (TableLayout) this.findViewById(R.id.tableLayout);
         tl.setVisibility(View.VISIBLE);
+        TableLayout tHelp=(TableLayout)this.findViewById(R.id.tableHelpLayout);
+        tHelp.setVisibility(View.VISIBLE);
         WordFragment f = (WordFragment) getFragmentManager().findFragmentById(R.id.WordFragment);
         f.updateImage(gameController.obtainPartialWord(), widthDisplay(), heightDisplay());
         try {
@@ -80,10 +92,7 @@ public class MainActivity extends AppCompatActivity {
         firstClickTime = System.currentTimeMillis();
     }
 
-    public void guessLetter(View view) {
-        Button button = (Button) view;
-        button.setEnabled(false);
-        char letter = button.getText().toString().toCharArray()[0];
+    private void guessLogic(View view,char letter) {
         gameController.execute(letter);
         WordFragment f = (WordFragment) getFragmentManager().findFragmentById(R.id.WordFragment);
         f.updateImage(gameController.obtainPartialWord(), widthDisplay(), heightDisplay());
@@ -97,6 +106,31 @@ public class MainActivity extends AppCompatActivity {
         } finally {
             UtilActivity.setBackground(view, remainingLives);
         }
+    }
+
+    public void guessLetter(View view) {
+        Button button = (Button) view;
+        button.setEnabled(false);
+        char letter = button.getText().toString().toCharArray()[0];
+        guessLogic(view,letter);
+    }
+
+    public void showOneLetter(View view) {
+        HelpFragment hf= (HelpFragment)getSupportFragmentManager().findFragmentById(R.id.HelpFragment);
+        hf.enableHelp(gameController.getCoins()==0);
+        char letter=gameController.showOneLetter();
+        disableLetterHelped(letter);
+        WordFragment f = (WordFragment) getFragmentManager().findFragmentById(R.id.WordFragment);
+        f.updateImage(gameController.obtainPartialWord(), widthDisplay(), heightDisplay());
+        if (gameController.isComplete()) {
+            //WIN
+        }
+    }
+
+    private void disableLetterHelped(char letter) {
+        int idButton = getResources().getIdentifier("button" + letter, "id", getPackageName());
+        Button buttonLetter=(Button) findViewById(idButton);
+        buttonLetter.setEnabled(false);
     }
 
     private int widthDisplay() {

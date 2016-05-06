@@ -3,6 +3,10 @@
  */
 package asd.org.ahorcado.models;
 
+import java.util.Map;
+
+import java.util.HashMap;
+
 import asd.org.ahorcado.exceptions.ForbiddenCharacterException;
 import asd.org.ahorcado.exceptions.LostLifeException;
 import asd.org.ahorcado.interfaces.HangmanWord;
@@ -26,4 +30,8 @@ public abstract class AbstractGuess {
         }
     }
 
+    public abstract char showAValidLetter();
+
+
 }
+

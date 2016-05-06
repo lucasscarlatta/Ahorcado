@@ -30,6 +30,8 @@ public abstract class AbstractGuess {
         }
     }
 
+    public abstract char showAValidLetter();
+
 
 }
 

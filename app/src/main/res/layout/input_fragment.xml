@@ -11,20 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="left|bottom">
 
-        <TableRow>
-            <Button
-                android:id="@+id/buttonHelp"
-                style="?android:attr/buttonStyleSmall"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@color/colorGreen"
-                android:gravity="center"
-                android:onClick="showOneLetter"
-                android:text="Help"
-                android:textAlignment="center"
-                android:textSize="23sp" />
-        </TableRow>
+
         <TableRow>
 
             <Button

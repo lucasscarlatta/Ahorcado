@@ -78,7 +78,11 @@ public class GameController {
         }
     }
 
-    public Map<String,String> showOneLetter(){
+    public int getCoins(){
+        return match.getCoin();
+    }
+
+    public char showOneLetter(){
        return this.match.showOneLetter();
     }
 }

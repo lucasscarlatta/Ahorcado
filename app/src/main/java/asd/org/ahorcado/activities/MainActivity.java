@@ -22,6 +22,7 @@ import java.util.Map;
 import asd.org.ahorcado.R;
 import asd.org.ahorcado.controller.GameController;
 import asd.org.ahorcado.exceptions.LostLifeException;
+import asd.org.ahorcado.fragments.HelpFragment;
 import asd.org.ahorcado.fragments.WordFragment;
 
 public class MainActivity extends AppCompatActivity {
@@ -41,6 +42,8 @@ public class MainActivity extends AppCompatActivity {
 
         TableLayout tl = (TableLayout) this.findViewById(R.id.tableLayout);
         tl.setVisibility(View.INVISIBLE);
+        TableLayout tHelp=(TableLayout)this.findViewById(R.id.tableHelpLayout);
+        tHelp.setVisibility(View.INVISIBLE);
         gameController = new GameController(this);
 
     }
@@ -67,6 +70,8 @@ public class MainActivity extends AppCompatActivity {
         button.setVisibility(View.INVISIBLE);
         TableLayout tl = (TableLayout) this.findViewById(R.id.tableLayout);
         tl.setVisibility(View.VISIBLE);
+        TableLayout tHelp=(TableLayout)this.findViewById(R.id.tableHelpLayout);
+        tHelp.setVisibility(View.VISIBLE);
         WordFragment f = (WordFragment) getFragmentManager().findFragmentById(R.id.WordFragment);
         f.updateImage(gameController.obtainPartialWord(), widthDisplay(), heightDisplay());
         try {
@@ -111,10 +116,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void showOneLetter(View view) {
-        Button buttonHelp=(Button) view;
-        buttonHelp.setEnabled(false);
-        Map result=gameController.showOneLetter();
-        guessLogic(view,(char)result.get("letter"));
+        HelpFragment hf= (HelpFragment)getSupportFragmentManager().findFragmentById(R.id.HelpFragment);
+        hf.enableHelp(gameController.getCoins()==0);
+        char letter=gameController.showOneLetter();
+        disableLetterHelped(letter);
+        WordFragment f = (WordFragment) getFragmentManager().findFragmentById(R.id.WordFragment);
+        f.updateImage(gameController.obtainPartialWord(), widthDisplay(), heightDisplay());
+        if (gameController.isComplete()) {
+            //WIN
+        }
     }
 
     private void disableLetterHelped(char letter) {

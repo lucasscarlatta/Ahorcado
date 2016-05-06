@@ -3,9 +3,11 @@
  */
 package asd.org.ahorcado.activities;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Point;
 import android.os.Bundle;
-import android.widget.Button;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Display;
@@ -14,15 +16,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TableLayout;
-import android.widget.TextView;
 import android.widget.Toast;
-
-import java.util.Map;
 
 import asd.org.ahorcado.R;
 import asd.org.ahorcado.controller.GameController;
-import asd.org.ahorcado.exceptions.LostLifeException;
+import asd.org.ahorcado.exceptions.MatchLostException;
 import asd.org.ahorcado.fragments.HelpFragment;
+import asd.org.ahorcado.fragments.InputFragment;
 import asd.org.ahorcado.fragments.WordFragment;
 
 public class MainActivity extends AppCompatActivity {
@@ -45,13 +45,11 @@ public class MainActivity extends AppCompatActivity {
         TableLayout tHelp=(TableLayout)this.findViewById(R.id.tableHelpLayout);
         tHelp.setVisibility(View.INVISIBLE);
         gameController = new GameController(this);
-
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
-
         return true;
     }
 
@@ -70,7 +68,8 @@ public class MainActivity extends AppCompatActivity {
         button.setVisibility(View.INVISIBLE);
         TableLayout tl = (TableLayout) this.findViewById(R.id.tableLayout);
         tl.setVisibility(View.VISIBLE);
-        TableLayout tHelp=(TableLayout)this.findViewById(R.id.tableHelpLayout);
+        getSupportFragmentManager().beginTransaction().replace(R.id.InputFragment, new InputFragment()).commit();
+        TableLayout tHelp = (TableLayout) this.findViewById(R.id.tableHelpLayout);
         tHelp.setVisibility(View.VISIBLE);
         HelpFragment hf= (HelpFragment)getSupportFragmentManager().findFragmentById(R.id.HelpFragment);
         int coins=gameController.getCoins();
@@ -79,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
         f.updateImage(gameController.obtainPartialWord(), widthDisplay(), heightDisplay());
         try {
             UtilActivity.setBackground(view, gameController.getRemainingLives());
-        } catch (LostLifeException e) {
+        } catch (MatchLostException e) {
         }
     }
 
@@ -95,27 +94,50 @@ public class MainActivity extends AppCompatActivity {
         firstClickTime = System.currentTimeMillis();
     }
 
-    private void guessLogic(View view,char letter) {
-        gameController.execute(letter);
-        WordFragment f = (WordFragment) getFragmentManager().findFragmentById(R.id.WordFragment);
-        f.updateImage(gameController.obtainPartialWord(), widthDisplay(), heightDisplay());
-        if (gameController.isComplete()) {
-            //WIN
+    private void guessLogic(View view, char letter) {
+        synchronized (view) {
+            gameController.execute(letter);
+            WordFragment f = (WordFragment) getFragmentManager().findFragmentById(R.id.WordFragment);
+            f.updateImage(gameController.obtainPartialWord(), widthDisplay(), heightDisplay());
+            resultGame(view);
         }
+    }
+
+    private void resultGame(View view) {
         int remainingLives = 0;
+        AlertDialog.Builder dialog = new AlertDialog.Builder(this).setCancelable(false);
         try {
             remainingLives = gameController.getRemainingLives();
-        } catch (LostLifeException e) {
+            if (gameController.isComplete()) {
+                createDialog(dialog, this, view, R.string.win_game, gameController.originalWord());
+            }
+        } catch (MatchLostException e) {
+            createDialog(dialog, this, view, R.string.lost_game, gameController.originalWord());
         } finally {
             UtilActivity.setBackground(view, remainingLives);
         }
+    }
+
+    private void createDialog(AlertDialog.Builder dialog, final MainActivity thisActivity, final View view, int title, String message) {
+        dialog.setTitle(title).setMessage(message)
+                .setPositiveButton(R.string.play_button, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        lunchGame(view);
+                    }
+                })
+                .setNegativeButton(R.string.cancel_button, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+                        startActivity(new Intent(thisActivity, MainActivity.class));
+                    }
+                }).show();
     }
 
     public void guessLetter(View view) {
         Button button = (Button) view;
         button.setEnabled(false);
         char letter = button.getText().toString().toCharArray()[0];
-        guessLogic(view,letter);
+        guessLogic(view, letter);
     }
 
     public void showOneLetter(View view) {
@@ -127,14 +149,12 @@ public class MainActivity extends AppCompatActivity {
         disableLetterHelped(letter);
         WordFragment f = (WordFragment) getFragmentManager().findFragmentById(R.id.WordFragment);
         f.updateImage(gameController.obtainPartialWord(), widthDisplay(), heightDisplay());
-        if (gameController.isComplete()) {
-            //WIN
-        }
+        resultGame(view);
     }
 
     private void disableLetterHelped(char letter) {
         int idButton = getResources().getIdentifier("button" + letter, "id", getPackageName());
-        Button buttonLetter=(Button) findViewById(idButton);
+        Button buttonLetter = (Button) findViewById(idButton);
         buttonLetter.setEnabled(false);
     }
 

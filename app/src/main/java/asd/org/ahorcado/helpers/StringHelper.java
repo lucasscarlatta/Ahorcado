@@ -3,15 +3,15 @@
  */
 package asd.org.ahorcado.helpers;
 
-import java.text.Normalizer;
-import java.util.regex.Pattern;
-
 public class StringHelper {
 
+    private static String WITH_ACCENT = "ÁÉÍÓÚ";
+    private static String WITHOUT_ACCENT = "AEIOU";
+
     public static String clearWord(String input) {
-        String normalized = Normalizer.normalize(input, Normalizer.Form.NFD);
-        Pattern pattern = Pattern.compile("\\P{ASCII}");
-        return pattern.matcher(normalized).replaceAll("");
+        for (int i = 0; i < WITH_ACCENT.length(); i++)
+            input = input.toUpperCase().replace(WITH_ACCENT.charAt(i), WITHOUT_ACCENT.charAt(i));
+        return input;
     }
 
 }

@@ -74,10 +74,10 @@ public class WordFragment extends Fragment {
             } else {
                 float startWord = start;
                 if (wordChar[i] == HangmanWord.LETTER_I) {
-                    startWord += longLine / 2;
+                    startWord += (longLine / 5) * 2;
                 }
                 paint.setTextScaleX(2f);
-                paint.setTextSize(offset);
+                paint.setTextSize(85);
                 canvas.drawText(String.valueOf(wordChar[i]), startWord, heightDisplay / DIVIDER, paint);
             }
             start = nextLine + offset;

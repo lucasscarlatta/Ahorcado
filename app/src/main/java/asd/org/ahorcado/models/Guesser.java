@@ -44,7 +44,7 @@ public class Guesser extends AbstractGuess {
         return letter;
     }
 
-    private char obtainAValidLetter() {
+    public char obtainAValidLetter() {
         Random r = new Random();
         String partialWord=this.word.getWord();
         String completedWord=this.originalWord.getWord();

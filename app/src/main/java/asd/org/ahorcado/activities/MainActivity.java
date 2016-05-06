@@ -72,6 +72,9 @@ public class MainActivity extends AppCompatActivity {
         tl.setVisibility(View.VISIBLE);
         TableLayout tHelp=(TableLayout)this.findViewById(R.id.tableHelpLayout);
         tHelp.setVisibility(View.VISIBLE);
+        HelpFragment hf= (HelpFragment)getSupportFragmentManager().findFragmentById(R.id.HelpFragment);
+        int coins=gameController.getCoins();
+        hf.setCoinsToView(coins);
         WordFragment f = (WordFragment) getFragmentManager().findFragmentById(R.id.WordFragment);
         f.updateImage(gameController.obtainPartialWord(), widthDisplay(), heightDisplay());
         try {
@@ -117,8 +120,10 @@ public class MainActivity extends AppCompatActivity {
 
     public void showOneLetter(View view) {
         HelpFragment hf= (HelpFragment)getSupportFragmentManager().findFragmentById(R.id.HelpFragment);
-        hf.enableHelp(gameController.getCoins()==0);
         char letter=gameController.showOneLetter();
+        int coins=gameController.getCoins();
+        hf.enableHelp(coins!=0);
+        hf.setCoinsToView(coins);
         disableLetterHelped(letter);
         WordFragment f = (WordFragment) getFragmentManager().findFragmentById(R.id.WordFragment);
         f.updateImage(gameController.obtainPartialWord(), widthDisplay(), heightDisplay());

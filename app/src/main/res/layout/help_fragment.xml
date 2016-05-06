@@ -1,0 +1,36 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".HelpFragment">
+
+    <TableLayout
+        android:id="@+id/tableHelpLayout"
+        android:layout_width="146dp"
+        android:layout_height="51dp"
+        android:layout_gravity="left|top"> 
+        <TableRow>
+            <Button
+                android:id="@+id/buttonHelp"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="10px"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:background="@color/colorGreen"
+                android:gravity="center"
+                android:onClick="showOneLetter"
+                android:text="@string/help_button"
+                android:textAlignment="center"
+                android:textSize="23sp" />
+            <TextView
+                android:id="@+id/txtHelp"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:background="@color/colorGreen"
+                android:textSize="23sp"
+                />
+        </TableRow>
+    </TableLayout>
+
+</FrameLayout>

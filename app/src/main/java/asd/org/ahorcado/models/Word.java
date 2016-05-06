@@ -3,7 +3,11 @@
  */
 package asd.org.ahorcado.models;
 
+
+import java.util.Random;
+
 import asd.org.ahorcado.interfaces.HangmanWord;
+
 
 public class Word implements HangmanWord {
 
@@ -71,6 +75,8 @@ public class Word implements HangmanWord {
         word.setCharAt(position, HangmanWord.MARK);
         this.word = (word.toString());
     }
+
+
 
     public boolean isComplete() {
         for (int i = 0; i < size; i++) {

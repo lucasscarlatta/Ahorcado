@@ -81,4 +81,12 @@ public class GameController {
     public String originalWord() {
         return match.getOriginalWord();
     }
+
+    public int getCoins(){
+        return match.getCoin();
+    }
+
+    public char showOneLetter(){
+       return this.match.showOneLetter();
+    }
 }

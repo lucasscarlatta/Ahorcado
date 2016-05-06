@@ -3,15 +3,22 @@
  */
 package asd.org.ahorcado.models;
 
+import java.util.Map;
+import asd.org.ahorcado.exceptions.MatchLostException;
 import asd.org.ahorcado.exceptions.LostLifeException;
 
 public abstract class AbstractMatch {
 
-    private AbstractGuess guesser;
+    protected AbstractGuess guesser;
 
     private int life;
     private User user;
     private boolean result;
+    private  int coin = 2;
+
+    public int getCoin(){return coin;}
+
+    public void setCoin(int coin){this.coin=coin;}
 
     public int getLife() {
         return life;
@@ -44,6 +51,15 @@ public abstract class AbstractMatch {
             --life;
         }
     }
+
+    public char showOneLetter(){
+        setCoin(this.coin -1);
+        return this.guesser.showAValidLetter();
+    }
+
+    /*public String getNewWord() {
+        return guesser.getNewWord();
+    }*/
 
     public void initialGame(Word word) {
         guesser = new Guesser(word);

@@ -5,9 +5,9 @@ package asd.org.ahorcado.interfaces;
 
 public interface HangmanWord {
 
-    final char MARK = '_';
+    char MARK = '_';
 
-    final char LETTER_I = 'I';
+    char LETTER_I = 'I';
 
     boolean containsLetter(char letter);
 

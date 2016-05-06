@@ -43,7 +43,7 @@ public class WordDAO {
         Map<Word, Integer> result = new HashMap<>();
         try {
             this.open();
-            String notInIds = wordIdList.size() > 0 ? " AND ID NOT IN (" + convertList(wordIdList) + ")" : "";
+            String notInIds = wordIdList.size() > 0 ? " AND _ID NOT IN (" + convertList(wordIdList) + ")" : "";
             String query = "SELECT * FROM " + TABLE_WORD_NAME + " WHERE SIZE < 11" + notInIds + " ORDER BY RANDOM() LIMIT " + WORD_LIMIT;
             Cursor cursor = database.rawQuery(query, null);
             cursor.moveToFirst();

@@ -4,6 +4,7 @@
 package asd.org.ahorcado.activities;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Point;
@@ -18,33 +19,48 @@ import android.widget.Button;
 import android.widget.TableLayout;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+
+import org.json.JSONArray;
+
 import asd.org.ahorcado.R;
 import asd.org.ahorcado.controller.GameController;
 import asd.org.ahorcado.exceptions.MatchLostException;
 import asd.org.ahorcado.fragments.HelpFragment;
 import asd.org.ahorcado.fragments.InputFragment;
 import asd.org.ahorcado.fragments.WordFragment;
+import asd.org.ahorcado.service.CustomJSONArrayRequest;
+import asd.org.ahorcado.service.CustomVolleyRequestQueue;
 
-public class MainActivity extends AppCompatActivity {
-
-    private GameController gameController;
+public class MainActivity extends AppCompatActivity implements Response.Listener,
+        Response.ErrorListener {
 
     private static int INTERVAL = 2000; //2 second
+    private static final String REQUEST_TAG = "MainVolleyActivity";
 
     private long firstClickTime;
+    private GameController gameController;
+    private RequestQueue mQueue;
+    private boolean first;
+
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        progressDialog = new ProgressDialog(this);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         TableLayout tl = (TableLayout) this.findViewById(R.id.tableLayout);
         tl.setVisibility(View.INVISIBLE);
-        TableLayout tHelp=(TableLayout)this.findViewById(R.id.tableHelpLayout);
+        TableLayout tHelp = (TableLayout) this.findViewById(R.id.tableHelpLayout);
         tHelp.setVisibility(View.INVISIBLE);
-        gameController = new GameController(this);
+        gameController = new GameController();
     }
 
     @Override
@@ -62,8 +78,49 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        mQueue = CustomVolleyRequestQueue.getInstance(this.getApplicationContext())
+                .getRequestQueue();
+        String url = "http://localhost:3000/api/Words";
+        final CustomJSONArrayRequest jsonRequest = new CustomJSONArrayRequest(Request.Method
+                .GET, url,
+                new JSONArray(), this, this);
+        jsonRequest.setTag(REQUEST_TAG);
+        mQueue.add(jsonRequest);
+        progressDialog.setMessage("Processing...");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (mQueue != null) {
+            mQueue.cancelAll(REQUEST_TAG);
+        }
+    }
+
+    @Override
+    public void onErrorResponse(VolleyError error) {
+        System.out.println(error.toString());
+    }
+
+    @Override
+    public void onResponse(Object response) {
+        JSONArray jsonArray = (JSONArray) response;
+        gameController.newMatch(jsonArray);
+        first = true;
+        progressDialog.dismiss();
+    }
+
     public void lunchGame(View view) {
-        gameController.newMatch();
+        if (!first) {
+            gameController.newMatch(null);
+        } else {
+            first = false;
+        }
         Button button = (Button) findViewById(R.id.play_game);
         button.setVisibility(View.INVISIBLE);
         TableLayout tl = (TableLayout) this.findViewById(R.id.tableLayout);
@@ -71,8 +128,8 @@ public class MainActivity extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction().replace(R.id.InputFragment, new InputFragment()).commit();
         TableLayout tHelp = (TableLayout) this.findViewById(R.id.tableHelpLayout);
         tHelp.setVisibility(View.VISIBLE);
-        HelpFragment hf= (HelpFragment)getSupportFragmentManager().findFragmentById(R.id.HelpFragment);
-        int coins=gameController.getCoins();
+        HelpFragment hf = (HelpFragment) getSupportFragmentManager().findFragmentById(R.id.HelpFragment);
+        int coins = gameController.getCoins();
         hf.setCoinsToView(coins);
         WordFragment f = (WordFragment) getFragmentManager().findFragmentById(R.id.WordFragment);
         f.updateImage(gameController.obtainPartialWord(), widthDisplay(), heightDisplay());
@@ -122,11 +179,13 @@ public class MainActivity extends AppCompatActivity {
         dialog.setTitle(title).setMessage(message)
                 .setPositiveButton(R.string.play_button, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
                         lunchGame(view);
                     }
                 })
                 .setNegativeButton(R.string.cancel_button, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
                         finish();
                         startActivity(new Intent(thisActivity, MainActivity.class));
                     }
@@ -141,10 +200,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void showOneLetter(View view) {
-        HelpFragment hf= (HelpFragment)getSupportFragmentManager().findFragmentById(R.id.HelpFragment);
-        char letter=gameController.showOneLetter();
-        int coins=gameController.getCoins();
-        hf.enableHelp(coins!=0);
+        HelpFragment hf = (HelpFragment) getSupportFragmentManager().findFragmentById(R.id.HelpFragment);
+        char letter = gameController.showOneLetter();
+        int coins = gameController.getCoins();
+        hf.enableHelp(coins != 0);
         hf.setCoinsToView(coins);
         disableLetterHelped(letter);
         WordFragment f = (WordFragment) getFragmentManager().findFragmentById(R.id.WordFragment);

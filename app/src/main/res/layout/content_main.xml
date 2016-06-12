@@ -29,8 +29,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"></fragment>
 
-
-
     <fragment
         android:id="@+id/InputFragment"
         android:name="asd.org.ahorcado.fragments.InputFragment"
@@ -47,6 +45,5 @@
         android:layout_alignParentBottom="true"
         android:layout_alignTop="@+id/InputFragment"
         android:layout_alignParentTop="true"></fragment>
-
 
 </RelativeLayout>

@@ -4,8 +4,6 @@
 package asd.org.ahorcado.models;
 
 
-import java.util.Random;
-
 import asd.org.ahorcado.interfaces.HangmanWord;
 
 
@@ -19,6 +17,13 @@ public class Word implements HangmanWord {
     public Word(String word) {
         this.word = word;
         this.size = word.length();
+    }
+
+    public Word(Long id, String word, int size, int category) {
+        this.id = id;
+        this.word = word;
+        this.size = size;
+        this.category = category;
     }
 
     public Long getId() {

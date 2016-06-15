@@ -3,11 +3,11 @@
  */
 package asd.org.ahorcado.models;
 
+import java.io.Serializable;
 
 import asd.org.ahorcado.interfaces.HangmanWord;
 
-
-public class Word implements HangmanWord {
+public class Word implements HangmanWord, Serializable {
 
     private Long id;
     private String word;
@@ -80,7 +80,6 @@ public class Word implements HangmanWord {
         word.setCharAt(position, HangmanWord.MARK);
         this.word = (word.toString());
     }
-
 
 
     public boolean isComplete() {

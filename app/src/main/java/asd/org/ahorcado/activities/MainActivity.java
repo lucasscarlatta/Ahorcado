@@ -23,8 +23,9 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 
-import org.json.JSONArray;
+import org.json.JSONObject;
 
 import asd.org.ahorcado.R;
 import asd.org.ahorcado.controller.GameController;
@@ -32,7 +33,6 @@ import asd.org.ahorcado.exceptions.MatchLostException;
 import asd.org.ahorcado.fragments.HelpFragment;
 import asd.org.ahorcado.fragments.InputFragment;
 import asd.org.ahorcado.fragments.WordFragment;
-import asd.org.ahorcado.service.CustomJSONArrayRequest;
 import asd.org.ahorcado.service.CustomVolleyRequestQueue;
 
 public class MainActivity extends AppCompatActivity implements Response.Listener,
@@ -83,10 +83,10 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
         super.onStart();
         mQueue = CustomVolleyRequestQueue.getInstance(this.getApplicationContext())
                 .getRequestQueue();
-        String url = "http://localhost:3000/api/Words";
-        final CustomJSONArrayRequest jsonRequest = new CustomJSONArrayRequest(Request.Method
+        String url = "http://localhost:3000/api/words/randomWord";
+        final JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method
                 .GET, url,
-                new JSONArray(), this, this);
+                new JSONObject(), this, this);
         jsonRequest.setTag(REQUEST_TAG);
         mQueue.add(jsonRequest);
         progressDialog.setMessage("Processing...");
@@ -105,22 +105,17 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
     @Override
     public void onErrorResponse(VolleyError error) {
         System.out.println(error.toString());
+        progressDialog.dismiss();
     }
 
     @Override
     public void onResponse(Object response) {
-        JSONArray jsonArray = (JSONArray) response;
-        gameController.newMatch(jsonArray);
+        gameController.newMatch(response);
         first = true;
         progressDialog.dismiss();
     }
 
     public void lunchGame(View view) {
-        if (!first) {
-            gameController.newMatch(null);
-        } else {
-            first = false;
-        }
         Button button = (Button) findViewById(R.id.play_game);
         button.setVisibility(View.INVISIBLE);
         TableLayout tl = (TableLayout) this.findViewById(R.id.tableLayout);

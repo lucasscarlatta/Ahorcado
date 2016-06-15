@@ -3,13 +3,8 @@
  */
 package asd.org.ahorcado.controller;
 
-import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import asd.org.ahorcado.exceptions.MatchLostException;
 import asd.org.ahorcado.models.AbstractMatch;
@@ -20,48 +15,27 @@ public class GameController {
 
     public static int NUMBER_LIFE = 6;
 
-    private Map<Word, Integer> wordMap;
-    private List<Long> usedWordIdList;
     private AbstractMatch match;
 
     public GameController() {
-        this.wordMap = new HashMap<>();
-        this.usedWordIdList = new ArrayList<>();
     }
 
-    private void loadMap(JSONArray jsonArray) {
+    private Word getWord(Object object) {
+        Word word = null;
         try {
-            for (int i = 0; i < jsonArray.length(); i++) {
-                JSONObject jsonWord = (JSONObject) jsonArray.get(i);
-                Long id = jsonWord.getLong("id");
-                String wordLetter = jsonWord.getString("name");
-                int size = wordLetter.length();
-                Word word = new Word(id, wordLetter, size, 0);
-                wordMap.put(word, 0);
-            }
-        } catch (Exception e) {
+            Long id = ((JSONObject) object).getLong("id");
+            String wordLetter = ((JSONObject) object).getString("name");
+            int size = wordLetter.length();
+            word = new Word(id, wordLetter, size, 0);
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
+        return word;
     }
 
-    private Word getWord(JSONArray jsonArray) {
-        Word myWord = null;
-        if (wordMap.isEmpty()) {
-            loadMap(jsonArray);
-        }
-        for (Word word : wordMap.keySet()) {
-            if (wordMap.get(word) == 0) {
-                usedWordIdList.add(word.getId());
-                wordMap.remove(word);
-                myWord = word;
-                break;
-            }
-        }
-        return myWord;
-    }
-
-    public void newMatch(JSONArray jsonArray) {
+    public void newMatch(Object object) {
         match = new Match();
-        match.initialGame(getWord(jsonArray));
+        match.initialGame(getWord(object));
         match.setLife(NUMBER_LIFE);
     }
 

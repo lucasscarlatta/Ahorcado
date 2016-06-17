@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "7526408315",
+    "firebase_url": "https://hangman-1345.firebaseio.com",
+    "project_id": "hangman-1345",
+    "storage_bucket": "hangman-1345.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:7526408315:android:6fb7aa9186bc6829",
+        "android_client_info": {
+          "package_name": "asd.org.ahorcado"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "7526408315-n6dihi5ideh0ne2uhc73597tvairel60.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA9jwiq9Z_AOGTw8JBMdjlV1AJcJH3B6jg"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

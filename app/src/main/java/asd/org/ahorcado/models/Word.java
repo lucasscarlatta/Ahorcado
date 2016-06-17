@@ -3,13 +3,11 @@
  */
 package asd.org.ahorcado.models;
 
-
-import java.util.Random;
+import java.io.Serializable;
 
 import asd.org.ahorcado.interfaces.HangmanWord;
 
-
-public class Word implements HangmanWord {
+public class Word implements HangmanWord, Serializable {
 
     private Long id;
     private String word;
@@ -19,6 +17,13 @@ public class Word implements HangmanWord {
     public Word(String word) {
         this.word = word;
         this.size = word.length();
+    }
+
+    public Word(Long id, String word, int size, int category) {
+        this.id = id;
+        this.word = word;
+        this.size = size;
+        this.category = category;
     }
 
     public Long getId() {
@@ -75,7 +80,6 @@ public class Word implements HangmanWord {
         word.setCharAt(position, HangmanWord.MARK);
         this.word = (word.toString());
     }
-
 
 
     public boolean isComplete() {

@@ -3,14 +3,9 @@
  */
 package asd.org.ahorcado.controller;
 
-import android.content.Context;
+import org.json.JSONException;
+import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import asd.org.ahorcado.dal.dao.WordDAO;
 import asd.org.ahorcado.exceptions.MatchLostException;
 import asd.org.ahorcado.models.AbstractMatch;
 import asd.org.ahorcado.models.Match;
@@ -20,41 +15,27 @@ public class GameController {
 
     public static int NUMBER_LIFE = 6;
 
-    private Context context;
-    private Map<Word, Integer> wordMap;
-    private List<Long> usedWordIdList;
     private AbstractMatch match;
 
-    public GameController(Context context) {
-        this.wordMap = new HashMap<>();
-        this.context = context;
-        this.usedWordIdList = new ArrayList<>();
+    public GameController() {
     }
 
-    private void loadMap() {
-        WordDAO wordDAO = new WordDAO(context);
-        wordMap = wordDAO.getWords(usedWordIdList);
-    }
-
-    private Word getWord() {
-        Word myWord = null;
-        if (wordMap.isEmpty()) {
-            loadMap();
+    private Word getWord(Object object) {
+        Word word = null;
+        try {
+            Long id = ((JSONObject) object).getLong("id");
+            String wordLetter = ((JSONObject) object).getString("name");
+            int size = wordLetter.length();
+            word = new Word(id, wordLetter, size, 0);
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
-        for (Word word : wordMap.keySet()) {
-            if (wordMap.get(word) == 0) {
-                usedWordIdList.add(word.getId());
-                wordMap.remove(word);
-                myWord = word;
-                break;
-            }
-        }
-        return myWord;
+        return word;
     }
 
-    public void newMatch() {
+    public void newMatch(Object object) {
         match = new Match();
-        match.initialGame(getWord());
+        match.initialGame(getWord(object));
         match.setLife(NUMBER_LIFE);
     }
 
@@ -71,7 +52,7 @@ public class GameController {
     }
 
     public int getRemainingLives() throws MatchLostException {
-        if (match.getLife() == 0){
+        if (match.getLife() == 0) {
             throw new MatchLostException();
         } else {
             return match.getLife();
@@ -82,11 +63,12 @@ public class GameController {
         return match.getOriginalWord();
     }
 
-    public int getCoins(){
+    public int getCoins() {
         return match.getCoin();
     }
 
-    public char showOneLetter(){
-       return this.match.showOneLetter();
+    public char showOneLetter() {
+        return this.match.showOneLetter();
     }
+
 }

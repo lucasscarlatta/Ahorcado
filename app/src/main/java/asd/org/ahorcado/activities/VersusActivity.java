@@ -35,6 +35,7 @@ import asd.org.ahorcado.R;
 import asd.org.ahorcado.controller.GameController;
 import asd.org.ahorcado.fragments.WordFragment;
 import asd.org.ahorcado.helpers.UserAdapter;
+import asd.org.ahorcado.models.AbstractMatch;
 import asd.org.ahorcado.models.Word;
 import asd.org.ahorcado.service.CustomVolleyRequestQueue;
 import asd.org.ahorcado.utils.MySharedPreference;
@@ -64,7 +65,7 @@ public class VersusActivity extends AppCompatActivity {
         opponentUser = b.getInt(UserAdapter.COLUMN_ID);
         tvOpponentName = (TextView) findViewById(R.id.opponentName);
         tvOpponentName.setText(opponentName);
-        matchId = b.getLong(UserAdapter.MATCH_ID);
+        matchId = b.getLong(AbstractMatch.MATCH_ID);
         if (matchId == null) {
             AlertDialog.Builder dialog = new AlertDialog.Builder(this).setCancelable(false);
             dialog.setTitle(R.string.challenge_title)
@@ -85,16 +86,51 @@ public class VersusActivity extends AppCompatActivity {
         } else if (matchId == -1) {
             createdNewMatch();
         } else {
-            opponentGuessedLetters();
-            Word word = (Word) b.get("word");
-            pbOpponent = (ProgressBar) findViewById(R.id.opponentProgress);
-            pbOpponent.setMax(word.getSize());
-            pbOpponent.setProgress(0);
-            gameController.newMatch(word);
+            if(b.getBoolean(AbstractMatch.IS_ACTIVE)) {
+                opponentGuessedLetters();
+                int idWord = b.getInt("idWord");
+                getNewWord(idWord);
+            } else {
+                AlertDialog.Builder dialog = new AlertDialog.Builder(this).setCancelable(false);
+                dialog.setTitle(R.string.challenge_title)
+                        .setMessage(String.format(getString(R.string.challenger_refused), opponentName))
+                        .setPositiveButton(R.string.ok_button, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                                finish();
+                                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                            }
+                        }).show();
+            }
         }
         setContentView(R.layout.activity_versus);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+    }
+
+    private void getNewWord(final int idWord) {
+        String url = MySharedPreference.PREFIX_URL + "words/" + idWord;
+        final JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method
+                .GET, url,
+                new JSONObject(), new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                Word word = gameController.getWord(response);
+                pbOpponent = (ProgressBar) findViewById(R.id.opponentProgress);
+                pbOpponent.setMax(word.getSize());
+                pbOpponent.setProgress(0);
+                gameController.newMatch(word);
+                progressDialog.dismiss();
+            }
+        }, new Response.ErrorListener() {
+            public void onErrorResponse(VolleyError error) {
+                System.out.println(error.toString());
+                progressDialog.dismiss();
+                Toast.makeText(VersusActivity.this, error.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
+        jsonRequest.setTag(MySharedPreference.REQUEST_GET_TAG);
+        mQueue.add(jsonRequest);
     }
 
     private void opponentGuessedLetters() {
@@ -162,7 +198,7 @@ public class VersusActivity extends AppCompatActivity {
                     @Override
                     protected Map<String, String> getParams() {
                         Map<String, String> params = new HashMap<>();
-                        params.put(UserAdapter.MATCH_ID, String.valueOf(matchId));
+                        params.put(AbstractMatch.MATCH_ID, String.valueOf(matchId));
                         params.put("partialWord", gameController.obtainPartialWord());
                         return params;
                     }
@@ -199,7 +235,7 @@ public class VersusActivity extends AppCompatActivity {
 
     private void isChallenger(final Boolean accept) {
         UtilActivity.createProcessing(progressDialog);
-        String url = MySharedPreference.PREFIX_URL + "challenger/accept";
+        String url = MySharedPreference.PREFIX_URL + "notifications/challengeAccept";
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
                     @Override
@@ -233,15 +269,15 @@ public class VersusActivity extends AppCompatActivity {
     private void createdNewMatch() {
         UtilActivity.createProcessing(progressDialog);
         String myToken = FirebaseInstanceId.getInstance().getToken();
-        String url = MySharedPreference.PREFIX_URL + "match/newMatch/" + opponentUser + "/" + myToken;
+        String url = MySharedPreference.PREFIX_URL + "matches/" + opponentUser + "/" + myToken;
         final JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method
                 .GET, url,
                 new JSONObject(), new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 finish();
-                gameController.getChallenger(response, opponentUser, opponentName, VersusActivity.this);
                 progressDialog.dismiss();
+                gameController.getChallenger(response, opponentUser, opponentName, VersusActivity.this);
             }
         }, new Response.ErrorListener() {
             public void onErrorResponse(VolleyError error) {

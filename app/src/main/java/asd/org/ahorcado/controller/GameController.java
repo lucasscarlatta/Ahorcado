@@ -117,8 +117,8 @@ public class GameController {
             Intent intent = new Intent(context, VersusActivity.class);
             intent.putExtra(UserAdapter.COLUMN_ID, opponentUser);
             intent.putExtra(UserAdapter.COLUMN_NAME, opponentName);
-
-            Long id = jsonObject.getLong(UserAdapter.MATCH_ID);
+            intent.putExtra(AbstractMatch.IS_ACTIVE, jsonObject.getBoolean(AbstractMatch.IS_ACTIVE));
+            Long id = jsonObject.getLong(AbstractMatch.MATCH_ID);
             if (id != null) {
                 String wordText = jsonObject.getString("wordText");
                 Long wordId = jsonObject.getLong("wordId");
@@ -127,14 +127,10 @@ public class GameController {
             } else {
                 id = -1L;
             }
-            intent.putExtra(UserAdapter.MATCH_ID, id);
+            intent.putExtra(AbstractMatch.MATCH_ID, id);
         } catch (JSONException e) {
             e.printStackTrace();
         }
-    }
-
-    public int wordSize(){
-        return match.getOriginalWord().length();
     }
 
 }

@@ -16,7 +16,6 @@ public class UserAdapter extends BaseAdapter {
 
     public static final String COLUMN_ID = "id";
     public static final String COLUMN_NAME = "name";
-    public static String MATCH_ID = "matchId";
 
     public List<Map<String, String>> list;
     private Activity activity;

@@ -20,5 +20,6 @@
     <string name="un_register">No podes jugar el modo versus</string>
     <string name="challenge_title">Desafío</string>
     <string name="challenger">%1$s te desafió</string>
+    <string name="challenger_refused">%1$s no aceptó el desafío</string>
 </resources>
 

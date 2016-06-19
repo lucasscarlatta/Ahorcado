@@ -3,7 +3,10 @@
     <string name="app_name">Ahorcado</string>
     <string name="action_settings">Configuraciones</string>
     <string name="play_button">Jugar</string>
+    <string name="play_vs_button">Modo versus</string>
+    <string name="available_cb">Habilitar modo versus</string>
     <string name="cancel_button">Cancelar</string>
+    <string name="ok_button">Aceptar</string>
     <string name="menu_button">Menú</string>
     <string name="title_activity_input">Ahorcado</string>
     <string name="win_game">Ganaste</string>
@@ -11,5 +14,11 @@
     <string name="back_button">"Vuelve a presionar para salir de la partida"</string>
     <string name="word_game">La palabra es </string>
     <string name="help_button">Ayuda</string>
+    <string name="input_user_name">Ingrese un nombre de usuario</string>
+    <string name="processing">Procesando...</string>
+    <string name="registered">Podes jugar el modo versus</string>
+    <string name="un_register">No podes jugar el modo versus</string>
+    <string name="challenge_title">Desafío</string>
+    <string name="challenger">%1$s te desafió</string>
 </resources>
 

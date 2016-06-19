@@ -3,13 +3,23 @@
  */
 package asd.org.ahorcado.controller;
 
+import com.google.firebase.iid.FirebaseInstanceId;
+
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import asd.org.ahorcado.exceptions.MatchLostException;
+import asd.org.ahorcado.helpers.UserAdapter;
 import asd.org.ahorcado.models.AbstractMatch;
 import asd.org.ahorcado.models.Match;
 import asd.org.ahorcado.models.Word;
+import asd.org.ahorcado.utils.MySharedPreference;
 
 public class GameController {
 
@@ -20,12 +30,12 @@ public class GameController {
     public GameController() {
     }
 
-    private Word getWord(Object object) {
+    public Word getWord(Object object) {
         Word word = null;
         try {
             Long id = ((JSONObject) object).getLong("id");
-            String wordLetter = ((JSONObject) object).getString("name");
-            int size = wordLetter.length();
+            String wordLetter = ((JSONObject) object).getString("word");
+            int size = ((JSONObject) object).getInt("size");
             word = new Word(id, wordLetter, size, 0);
         } catch (JSONException e) {
             e.printStackTrace();
@@ -33,9 +43,9 @@ public class GameController {
         return word;
     }
 
-    public void newMatch(Object object) {
+    public void newMatch(Word word) {
         match = new Match();
-        match.initialGame(getWord(object));
+        match.initialGame(word);
         match.setLife(NUMBER_LIFE);
     }
 
@@ -69,6 +79,27 @@ public class GameController {
 
     public char showOneLetter() {
         return this.match.showOneLetter();
+    }
+
+    public List<Map<String, String>> getUserMap(JSONArray jsonArray) {
+        List<Map<String, String>> userList = new ArrayList<>();
+        try {
+            for (int i = 0; i< jsonArray.length(); i++) {
+                Map<String, String> userMap = new HashMap<>();
+                JSONObject jsonUser = (JSONObject) jsonArray.get(i);
+                String token = jsonUser.getString(MySharedPreference.TOKEN_TO_SERVER);
+                if(token.compareTo(FirebaseInstanceId.getInstance().getToken()) != 0){
+                    String id = jsonUser.getString("id");
+                    String name = jsonUser.getString("userId");
+                    userMap.put(UserAdapter.COLUMN_ID, id);
+                    userMap.put(UserAdapter.COLUMN_NAME, name);
+                    userList.add(userMap);
+                }
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return userList;
     }
 
 }

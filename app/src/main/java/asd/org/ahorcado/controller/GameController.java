@@ -107,8 +107,8 @@ public class GameController {
         return userList;
     }
 
-    public int countGuessedLetters() {
-        String guessed = match.obtainPartialWord().replaceAll(String.valueOf(HangmanWord.MARK), "");
+    public int countGuessedLetters(String partialWord) {
+        String guessed = partialWord.replaceAll(String.valueOf(HangmanWord.MARK), "");
         return guessed.length();
     }
 
@@ -131,6 +131,10 @@ public class GameController {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
+
+    public int wordSize(){
+        return match.getOriginalWord().length();
     }
 
 }

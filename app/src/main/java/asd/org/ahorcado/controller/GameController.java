@@ -3,6 +3,9 @@
  */
 package asd.org.ahorcado.controller;
 
+import android.content.Context;
+import android.content.Intent;
+
 import com.google.firebase.iid.FirebaseInstanceId;
 
 import org.json.JSONArray;
@@ -14,8 +17,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import asd.org.ahorcado.activities.VersusActivity;
 import asd.org.ahorcado.exceptions.MatchLostException;
 import asd.org.ahorcado.helpers.UserAdapter;
+import asd.org.ahorcado.interfaces.HangmanWord;
 import asd.org.ahorcado.models.AbstractMatch;
 import asd.org.ahorcado.models.Match;
 import asd.org.ahorcado.models.Word;
@@ -49,8 +54,8 @@ public class GameController {
         match.setLife(NUMBER_LIFE);
     }
 
-    public void execute(char letter) {
-        match.execute(letter);
+    public boolean execute(char letter) {
+        return match.execute(letter);
     }
 
     public String obtainPartialWord() {
@@ -84,11 +89,11 @@ public class GameController {
     public List<Map<String, String>> getUserMap(JSONArray jsonArray) {
         List<Map<String, String>> userList = new ArrayList<>();
         try {
-            for (int i = 0; i< jsonArray.length(); i++) {
+            for (int i = 0; i < jsonArray.length(); i++) {
                 Map<String, String> userMap = new HashMap<>();
                 JSONObject jsonUser = (JSONObject) jsonArray.get(i);
                 String token = jsonUser.getString(MySharedPreference.TOKEN_TO_SERVER);
-                if(token.compareTo(FirebaseInstanceId.getInstance().getToken()) != 0){
+                if (token.compareTo(FirebaseInstanceId.getInstance().getToken()) != 0) {
                     String id = jsonUser.getString("id");
                     String name = jsonUser.getString("userId");
                     userMap.put(UserAdapter.COLUMN_ID, id);
@@ -100,6 +105,32 @@ public class GameController {
             e.printStackTrace();
         }
         return userList;
+    }
+
+    public int countGuessedLetters() {
+        String guessed = match.obtainPartialWord().replaceAll(String.valueOf(HangmanWord.MARK), "");
+        return guessed.length();
+    }
+
+    public void getChallenger(JSONObject jsonObject, int opponentUser, String opponentName, Context context) {
+        try {
+            Intent intent = new Intent(context, VersusActivity.class);
+            intent.putExtra(UserAdapter.COLUMN_ID, opponentUser);
+            intent.putExtra(UserAdapter.COLUMN_NAME, opponentName);
+
+            Long id = jsonObject.getLong(UserAdapter.MATCH_ID);
+            if (id != null) {
+                String wordText = jsonObject.getString("wordText");
+                Long wordId = jsonObject.getLong("wordId");
+                int size = jsonObject.getInt("wordSize");
+                intent.putExtra("word", new Word(wordId, wordText, size, 0));
+            } else {
+                id = -1L;
+            }
+            intent.putExtra(UserAdapter.MATCH_ID, id);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
 }

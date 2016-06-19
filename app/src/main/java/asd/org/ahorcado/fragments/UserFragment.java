@@ -3,6 +3,7 @@ package asd.org.ahorcado.fragments;
 import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,6 +23,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import asd.org.ahorcado.R;
+import asd.org.ahorcado.activities.VersusActivity;
 import asd.org.ahorcado.helpers.UserAdapter;
 import asd.org.ahorcado.utils.MySharedPreference;
 
@@ -62,7 +64,7 @@ public class UserFragment extends Fragment {
             public void onItemClick(AdapterView<?> arg0, View arg1,
                                     int position, long arg3) {
                 Map<String, String> userMap = (Map<String, String>) userAdapter.getItem(position);
-                getUserId(userMap);
+                getUserId(userMap.get(UserAdapter.COLUMN_ID), userMap.get(UserAdapter.COLUMN_NAME));
             }
         });
         return view;
@@ -72,17 +74,19 @@ public class UserFragment extends Fragment {
         listView.setAdapter(userAdapter);
     }
 
-    private void getUserId (final Map<String, String> userMap) {
+    private void getUserId (final String idUserTo, final String nameUserTo) {
         final ProgressDialog progressDialog = new ProgressDialog(context);
         progressDialog.setMessage(getString(R.string.processing));
         progressDialog.setCancelable(false);
         progressDialog.show();
-        //TODO change url
-        final String url = MySharedPreference.PREFIX_URL + "words/1";
+        final String url = MySharedPreference.PREFIX_URL + "challenger";
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
+                        Intent intent = new Intent(context, VersusActivity.class);
+                        intent.putExtra(UserAdapter.COLUMN_NAME, nameUserTo);
+                        intent.putExtra(UserAdapter.COLUMN_ID, idUserTo);
                         progressDialog.dismiss();
                     }
                 },
@@ -96,9 +100,8 @@ public class UserFragment extends Fragment {
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
-                String id = userMap.get(UserAdapter.COLUMN_ID);
                 params.put(MySharedPreference.TOKEN_TO_SERVER, FirebaseInstanceId.getInstance().getToken());
-                params.put("idUserTo", id);
+                params.put(MySharedPreference.ID_USER_TO, idUserTo);
                 return params;
             }
         };

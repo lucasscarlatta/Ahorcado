@@ -3,6 +3,7 @@
  */
 package asd.org.ahorcado.activities;
 
+import android.app.ProgressDialog;
 import android.view.View;
 import android.widget.RelativeLayout;
 
@@ -35,6 +36,12 @@ public class UtilActivity {
                 relativeLayout.setBackgroundResource(R.drawable.hangman7);
                 break;
         }
+    }
+
+    protected static void createProcessing(ProgressDialog progressDialog) {
+        progressDialog.setMessage("Processing...");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
     }
 
 }

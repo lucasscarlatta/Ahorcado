@@ -3,8 +3,6 @@
  */
 package asd.org.ahorcado.models;
 
-import java.util.Map;
-import asd.org.ahorcado.exceptions.MatchLostException;
 import asd.org.ahorcado.exceptions.LostLifeException;
 
 public abstract class AbstractMatch {
@@ -44,11 +42,15 @@ public abstract class AbstractMatch {
         this.result = result;
     }
 
-    public void execute(char letter) {
+    public boolean execute(char letter) {
+        boolean result = true;
         try {
             this.guesser.processWord(letter);
         } catch (LostLifeException e) {
             --life;
+            result = false;
+        } finally {
+            return result;
         }
     }
 

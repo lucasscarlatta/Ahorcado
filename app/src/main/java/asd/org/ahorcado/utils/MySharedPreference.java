@@ -9,6 +9,7 @@ public class MySharedPreference {
     public static final String FIREBASE_CLOUD_MESSAGING = "fcm";
     public static final String SET_NOTIFY = "set_notify";
 
+    public static String ID_USER_TO = "idUserTo";
     public static String TOKEN_TO_SERVER = "deviceToken";
     public static String DEVICE_TYPE = "deviceType";
     public static String APP_ID = "appId";

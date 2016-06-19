@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         checkPlayServices();
         if (serverAvailable) {
-            createProcessing();
+            UtilActivity.createProcessing(progressDialog);
             mySharedPreference = new MySharedPreference(MainActivity.this);
             boolean sentToken = mySharedPreference.hasUserSubscribeToNotification();
             if (sentToken) {
@@ -220,9 +220,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void loadWord(final View view) {
-        createProcessing();
-        //TODO change URL
-        String url = MySharedPreference.PREFIX_URL + "words/1";
+        UtilActivity.createProcessing(progressDialog);
+        String url = MySharedPreference.PREFIX_URL + "words/random";
         final JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method
                 .GET, url,
                 new JSONObject(), new Response.Listener<JSONObject>() {
@@ -245,7 +244,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void sendUserName() {
-        createProcessing();
+        UtilActivity.createProcessing(progressDialog);
         String url = MySharedPreference.PREFIX_URL + "installations/updateByToken";
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
@@ -287,7 +286,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void findUsers(final UserFragment user, final Activity activity) {
-        createProcessing();
+        UtilActivity.createProcessing(progressDialog);
         String url = MySharedPreference.PREFIX_URL + "installations";
         final JsonArrayRequest jsonRequest = new JsonArrayRequest(Request.Method
                 .GET, url,
@@ -370,12 +369,6 @@ public class MainActivity extends AppCompatActivity {
         Point tam = new Point();
         display.getSize(tam);
         return tam;
-    }
-
-    private void createProcessing() {
-        progressDialog.setMessage(getString(R.string.processing));
-        progressDialog.setCancelable(false);
-        progressDialog.show();
     }
 
     private void checkPlayServices() {

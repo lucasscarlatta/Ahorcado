@@ -24,6 +24,7 @@ import org.json.JSONObject;
 
 import asd.org.ahorcado.R;
 import asd.org.ahorcado.activities.VersusActivity;
+import asd.org.ahorcado.helpers.UserAdapter;
 import asd.org.ahorcado.utils.MySharedPreference;
 
 public class CustomFirebaseMessagingService extends FirebaseMessagingService{
@@ -49,7 +50,7 @@ public class CustomFirebaseMessagingService extends FirebaseMessagingService{
             @Override
             public void onResponse(JSONObject response) {
                 try {
-                    sendNotification(response.getString("userFrom"));
+                    sendNotification(response.getString("userFrom"), response.getInt("id"));
                 } catch (JSONException e) {
                     e.printStackTrace();
                     Toast.makeText(appContext, e.getMessage(), Toast.LENGTH_LONG).show();
@@ -68,15 +69,17 @@ public class CustomFirebaseMessagingService extends FirebaseMessagingService{
         mRequestQueue.add(jsonRequest);
     }
 
-    private void sendNotification(String userName) {
+    private void sendNotification(String opponentName, int opponentId ) {
         Intent intent = new Intent(this, VersusActivity.class);
+        intent.putExtra(UserAdapter.COLUMN_NAME, opponentName);
+        intent.putExtra(UserAdapter.COLUMN_ID, opponentId);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
         Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
                 .setSmallIcon(R.drawable.notification_icon)
                 .setContentTitle(getString(R.string.challenge_title))
-                .setContentText(String.format(getString(R.string.challenger), userName))
+                .setContentText(String.format(getString(R.string.challenger), opponentName))
                 .setAutoCancel(true)
                 .setSound(defaultSoundUri)
                 .setContentIntent(pendingIntent);

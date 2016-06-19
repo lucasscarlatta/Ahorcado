@@ -3,7 +3,10 @@
     <string name="app_name">Hangman</string>
     <string name="action_settings">Settings</string>
     <string name="play_button">Play</string>
+    <string name="play_vs_button">Versus mode</string>
+    <string name="available_cb">Enable versus mode</string>
     <string name="cancel_button">Cancel</string>
+    <string name="ok_button">Ok</string>
     <string name="menu_button">Menu</string>
     <string name="title_activity_input">Hangman</string>
     <string name="win_game">You won</string>
@@ -11,4 +14,10 @@
     <string name="back_button">"Press again to leave this game"</string>
     <string name="word_game">The word is </string>
     <string name="help_button">Help</string>
+    <string name="input_user_name">Input a user name</string>
+    <string name="processing">Processing...</string>
+    <string name="registered">You can play versus mode</string>
+    <string name="un_register">You can not play versus mode</string>
+    <string name="challenge_title">Challenger</string>
+    <string name="challenger">%1$s challenge you</string>
 </resources>

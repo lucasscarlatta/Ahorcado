@@ -6,7 +6,7 @@
     tools:context=".InputFragment">
 
     <TableLayout
-        android:id="@+id/tableLayout"
+        android:id="@+id/keyboardTableLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="left|bottom">

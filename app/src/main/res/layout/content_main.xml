@@ -15,6 +15,15 @@
     tools:showIn="@layout/activity_main">
 
     <Button
+        android:id="@+id/available_versus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/available_cb"
+        android:onClick="onAvailableClicked"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
         android:id="@+id/play_game"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -23,11 +32,29 @@
         android:onClick="lunchGame"
         android:text="@string/play_button" />
 
+    <Button
+        android:id="@+id/play_vs_game"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_below="@+id/play_game"
+        android:onClick="lunchVsGame"
+        android:text="@string/play_vs_button" />
+
     <fragment
         android:id="@+id/WordFragment"
         android:name="asd.org.ahorcado.fragments.WordFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"></fragment>
+
+    <fragment
+        android:id="@+id/UserFragment"
+        android:name="asd.org.ahorcado.fragments.UserFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        ></fragment>
 
     <fragment
         android:id="@+id/InputFragment"

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="asd.org.ahorcado.activities.VersusActivity"
+    tools:showIn="@layout/activity_versus">
+
+    <fragment
+        android:id="@+id/WordFragment"
+        android:name="asd.org.ahorcado.fragments.WordFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"></fragment>
+
+    <fragment
+        android:id="@+id/InputFragment"
+        android:name="asd.org.ahorcado.fragments.InputFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        ></fragment>
+
+    <fragment
+        android:id="@+id/OpponentFragment"
+        android:name="asd.org.ahorcado.fragments.OpponentFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_alignTop="@+id/InputFragment"
+        android:layout_alignParentTop="true"></fragment>
+
+</RelativeLayout>

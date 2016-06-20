@@ -9,6 +9,9 @@ public abstract class AbstractMatch {
 
     protected AbstractGuess guesser;
 
+    public static String MATCH_ID = "matchId";
+    public static String IS_ACTIVE = "isActive";
+
     private int life;
     private User user;
     private boolean result;

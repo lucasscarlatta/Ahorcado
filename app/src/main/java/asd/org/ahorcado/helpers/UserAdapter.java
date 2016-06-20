@@ -16,12 +16,13 @@ public class UserAdapter extends BaseAdapter {
 
     public static final String COLUMN_ID = "id";
     public static final String COLUMN_NAME = "name";
-    public static String MATCH_ID = "matchId";
+    public static final String COLUMN_MY_ID = "myUserId";
 
     public List<Map<String, String>> list;
     private Activity activity;
     private TextView id;
     private TextView name;
+    private TextView myUserId;
 
     public UserAdapter(Activity activity, List<Map<String, String>> list) {
         super();
@@ -51,10 +52,12 @@ public class UserAdapter extends BaseAdapter {
             convertView = inflater.inflate(R.layout.user_row, null);
             id = (TextView) convertView.findViewById(R.id.userId);
             name = (TextView) convertView.findViewById(R.id.userName);
+            myUserId = (TextView) convertView.findViewById(R.id.myUserId);
         }
         Map<String, String> map = list.get(position);
         id.setText(map.get(COLUMN_ID));
         name.setText(map.get(COLUMN_NAME));
+        myUserId.setText(map.get(COLUMN_MY_ID));
         return convertView;
     }
 

@@ -267,6 +267,7 @@ public class MainActivity extends AppCompatActivity {
                 Map<String, String> params = new HashMap<>();
                 params.put(UserAdapter.COLUMN_NAME, userName);
                 params.put(MySharedPreference.TOKEN_TO_SERVER, FirebaseInstanceId.getInstance().getToken());
+                params.put("status", MySharedPreference.ACTIVE_STATUS);
                 return params;
             }
         };

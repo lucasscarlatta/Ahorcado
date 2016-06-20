@@ -3,9 +3,6 @@
  */
 package asd.org.ahorcado.controller;
 
-import android.content.Context;
-import android.content.Intent;
-
 import com.google.firebase.iid.FirebaseInstanceId;
 
 import org.json.JSONArray;
@@ -17,7 +14,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import asd.org.ahorcado.activities.VersusActivity;
 import asd.org.ahorcado.exceptions.MatchLostException;
 import asd.org.ahorcado.helpers.UserAdapter;
 import asd.org.ahorcado.interfaces.HangmanWord;
@@ -95,11 +91,14 @@ public class GameController {
                 JSONObject jsonUser = (JSONObject) jsonArray.get(i);
                 String token = jsonUser.getString(MySharedPreference.TOKEN_TO_SERVER);
                 if (token.compareTo(FirebaseInstanceId.getInstance().getToken()) != 0) {
-                    String id = jsonUser.getString("id");
-                    String name = jsonUser.getString("userId");
-                    userMap.put(UserAdapter.COLUMN_ID, id);
-                    userMap.put(UserAdapter.COLUMN_NAME, name);
-                    userList.add(userMap);
+                    String status = jsonUser.getString("status");
+                    if (status.compareTo(MySharedPreference.ACTIVE_STATUS) == 0) {
+                        String name = jsonUser.getString("userId");
+                        String id = jsonUser.getString("id");
+                        userMap.put(UserAdapter.COLUMN_ID, id);
+                        userMap.put(UserAdapter.COLUMN_NAME, name);
+                        userList.add(userMap);
+                    }
                 } else {
                     myId = jsonUser.getString("id");
                 }
@@ -116,27 +115,6 @@ public class GameController {
     public int countGuessedLetters(String partialWord) {
         String guessed = partialWord.replaceAll(String.valueOf(HangmanWord.MARK), "");
         return guessed.length();
-    }
-
-    public void getChallenger(JSONObject jsonObject, int opponentUser, String opponentName, Context context) {
-        try {
-            Intent intent = new Intent(context, VersusActivity.class);
-            intent.putExtra(UserAdapter.COLUMN_ID, opponentUser);
-            intent.putExtra(UserAdapter.COLUMN_NAME, opponentName);
-            intent.putExtra(AbstractMatch.IS_ACTIVE, jsonObject.getBoolean(AbstractMatch.IS_ACTIVE));
-            Long id = jsonObject.getLong(AbstractMatch.MATCH_ID);
-            if (id != null) {
-                String wordText = jsonObject.getString("wordText");
-                Long wordId = jsonObject.getLong("wordId");
-                int size = jsonObject.getInt("wordSize");
-                intent.putExtra("word", new Word(wordId, wordText, size, 0));
-            } else {
-                id = -1L;
-            }
-            intent.putExtra(AbstractMatch.MATCH_ID, id);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
     }
 
 }

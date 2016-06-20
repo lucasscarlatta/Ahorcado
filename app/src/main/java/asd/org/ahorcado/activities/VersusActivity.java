@@ -60,12 +60,13 @@ public class VersusActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_versus);
         gameController = new GameController();
         progressDialog = new ProgressDialog(this);
         Bundle b = getIntent().getExtras();
         opponentName = b.getString(UserAdapter.COLUMN_NAME);
-        opponentUser = b.getInt(UserAdapter.COLUMN_ID);
-        myId = b.getInt(UserAdapter.COLUMN_MY_ID);
+        opponentUser = Integer.parseInt(b.getString(UserAdapter.COLUMN_ID));
+        myId = Integer.parseInt(b.getString(UserAdapter.COLUMN_MY_ID));
         tvOpponentName = (TextView) findViewById(R.id.opponentName);
         tvOpponentName.setText(opponentName);
         matchId = b.getLong(AbstractMatch.MATCH_ID);
@@ -86,7 +87,7 @@ public class VersusActivity extends AppCompatActivity {
                             startActivity(new Intent(getApplicationContext(), MainActivity.class));
                         }
                     }).show();
-        } else if (matchId == -1) {
+        } else if (matchId == -1L) {
             createdNewMatch();
         } else {
             if (b.getBoolean(AbstractMatch.IS_ACTIVE)) {
@@ -106,7 +107,6 @@ public class VersusActivity extends AppCompatActivity {
                         }).show();
             }
         }
-        setContentView(R.layout.activity_versus);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
     }
@@ -284,7 +284,7 @@ public class VersusActivity extends AppCompatActivity {
             public void onResponse(JSONObject response) {
                 finish();
                 progressDialog.dismiss();
-                gameController.getChallenger(response, opponentUser, opponentName, VersusActivity.this);
+                getChallenger(response);
             }
         }, new Response.ErrorListener() {
             public void onErrorResponse(VolleyError error) {
@@ -310,6 +310,28 @@ public class VersusActivity extends AppCompatActivity {
         Point tam = new Point();
         display.getSize(tam);
         return tam;
+    }
+
+    private void getChallenger(JSONObject jsonObject) {
+        try {
+            Intent intent = new Intent(this, VersusActivity.class);
+            intent.putExtra(UserAdapter.COLUMN_ID, opponentUser);
+            intent.putExtra(UserAdapter.COLUMN_NAME, opponentName);
+            intent.putExtra(AbstractMatch.IS_ACTIVE, jsonObject.getBoolean(AbstractMatch.IS_ACTIVE));
+            Long id = jsonObject.getLong(AbstractMatch.MATCH_ID);
+            if (id != null) {
+                String wordText = jsonObject.getString("wordText");
+                Long wordId = jsonObject.getLong("wordId");
+                int size = jsonObject.getInt("wordSize");
+                intent.putExtra("word", new Word(wordId, wordText, size, 0));
+            } else {
+                id = -1L;
+            }
+            intent.putExtra(AbstractMatch.MATCH_ID, id);
+            startActivity(intent);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
 }

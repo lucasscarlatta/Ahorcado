@@ -25,6 +25,7 @@ import java.util.Map;
 import asd.org.ahorcado.R;
 import asd.org.ahorcado.activities.VersusActivity;
 import asd.org.ahorcado.helpers.UserAdapter;
+import asd.org.ahorcado.models.AbstractMatch;
 import asd.org.ahorcado.utils.MySharedPreference;
 
 public class UserFragment extends Fragment {
@@ -79,7 +80,7 @@ public class UserFragment extends Fragment {
         progressDialog.setMessage(getString(R.string.processing));
         progressDialog.setCancelable(false);
         progressDialog.show();
-        final String url = MySharedPreference.PREFIX_URL + "challenger";
+        final String url = MySharedPreference.PREFIX_URL + "notifications/challenge";
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
                     @Override
@@ -88,7 +89,9 @@ public class UserFragment extends Fragment {
                         intent.putExtra(UserAdapter.COLUMN_NAME, nameUserTo);
                         intent.putExtra(UserAdapter.COLUMN_ID, idUserTo);
                         intent.putExtra(UserAdapter.COLUMN_MY_ID, idUserFrom);
+                        intent.putExtra(AbstractMatch.MATCH_ID, -1L);
                         progressDialog.dismiss();
+                        startActivity(intent);
                     }
                 },
                 new Response.ErrorListener() {

@@ -66,6 +66,7 @@ public class CustomFirebaseInstanceIDService extends FirebaseInstanceIdService {
                 Map<String, String> params = new HashMap<>();
                 params.put(MySharedPreference.APP_ID, "loopback-component-push-app");
                 params.put(MySharedPreference.TOKEN_TO_SERVER, token);
+                params.put("status", MySharedPreference.INACTIVE_STATUS);
                 params.put(MySharedPreference.DEVICE_TYPE, "android");
                 return params;
             }

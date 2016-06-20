@@ -29,14 +29,14 @@ public class CustomFirebaseMessagingService extends FirebaseMessagingService {
     public void onMessageReceived(final RemoteMessage remoteMessage) {
         Log.d(TAG, "From: " + remoteMessage.getFrom());
         Map<String, String> data = remoteMessage.getData();
-        sendNotification(data.get("messageFrom"), Integer.parseInt(data.get("message")));
+        sendNotification(data.get("messageFrom"), Integer.parseInt(data.get("idUserTo")), Integer.parseInt(data.get("idUserFrom")));
     }
 
-    private void sendNotification(String opponentName, int opponentId) {
+    private void sendNotification(String opponentName, int opponentId, int myId) {
         Intent intent = new Intent(this, VersusActivity.class);
         intent.putExtra(UserAdapter.COLUMN_NAME, opponentName);
         intent.putExtra(UserAdapter.COLUMN_ID, opponentId);
-        intent.putExtra(UserAdapter.COLUMN_MY_ID, opponentId);
+        intent.putExtra(UserAdapter.COLUMN_MY_ID, myId);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
         Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);

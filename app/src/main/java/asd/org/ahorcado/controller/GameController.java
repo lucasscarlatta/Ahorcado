@@ -89,6 +89,7 @@ public class GameController {
     public List<Map<String, String>> getUserMap(JSONArray jsonArray) {
         List<Map<String, String>> userList = new ArrayList<>();
         try {
+            String myId = null;
             for (int i = 0; i < jsonArray.length(); i++) {
                 Map<String, String> userMap = new HashMap<>();
                 JSONObject jsonUser = (JSONObject) jsonArray.get(i);
@@ -99,7 +100,12 @@ public class GameController {
                     userMap.put(UserAdapter.COLUMN_ID, id);
                     userMap.put(UserAdapter.COLUMN_NAME, name);
                     userList.add(userMap);
+                } else {
+                    myId = jsonUser.getString("id");
                 }
+            }
+            for (Map<String, String> map : userList) {
+                map.put(UserAdapter.COLUMN_MY_ID, myId);
             }
         } catch (JSONException e) {
             e.printStackTrace();

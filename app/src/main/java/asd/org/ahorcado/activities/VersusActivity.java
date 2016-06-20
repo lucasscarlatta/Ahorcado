@@ -48,10 +48,12 @@ public class VersusActivity extends AppCompatActivity {
     private int opponentUser;
     private int opponentStatus;
     private Long matchId;
+    private int myId;
     private ProgressDialog progressDialog;
     private RequestQueue mQueue;
     private TextView tvOpponentName;
     private ProgressBar pbOpponent;
+    private TextView tvOpponentStatus;
     private GameController gameController;
     private Timer timer = new Timer();
 
@@ -63,6 +65,7 @@ public class VersusActivity extends AppCompatActivity {
         Bundle b = getIntent().getExtras();
         opponentName = b.getString(UserAdapter.COLUMN_NAME);
         opponentUser = b.getInt(UserAdapter.COLUMN_ID);
+        myId = b.getInt(UserAdapter.COLUMN_MY_ID);
         tvOpponentName = (TextView) findViewById(R.id.opponentName);
         tvOpponentName.setText(opponentName);
         matchId = b.getLong(AbstractMatch.MATCH_ID);
@@ -86,7 +89,7 @@ public class VersusActivity extends AppCompatActivity {
         } else if (matchId == -1) {
             createdNewMatch();
         } else {
-            if(b.getBoolean(AbstractMatch.IS_ACTIVE)) {
+            if (b.getBoolean(AbstractMatch.IS_ACTIVE)) {
                 opponentGuessedLetters();
                 int idWord = b.getInt("idWord");
                 getNewWord(idWord);
@@ -116,9 +119,11 @@ public class VersusActivity extends AppCompatActivity {
             @Override
             public void onResponse(JSONObject response) {
                 Word word = gameController.getWord(response);
+                int size = word.getSize();
                 pbOpponent = (ProgressBar) findViewById(R.id.opponentProgress);
-                pbOpponent.setMax(word.getSize());
+                pbOpponent.setMax(size);
                 pbOpponent.setProgress(0);
+                tvOpponentStatus.setText(0 + " / " + size);
                 gameController.newMatch(word);
                 progressDialog.dismiss();
             }
@@ -144,8 +149,10 @@ public class VersusActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
-                            opponentStatus = gameController.countGuessedLetters(response.getString("word"));
+                            String myWord = response.getString("word");
+                            opponentStatus = gameController.countGuessedLetters(myWord);
                             pbOpponent.setProgress(opponentStatus);
+                            tvOpponentStatus.setText(opponentStatus + " / " + myWord.length());
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -199,6 +206,7 @@ public class VersusActivity extends AppCompatActivity {
                     protected Map<String, String> getParams() {
                         Map<String, String> params = new HashMap<>();
                         params.put(AbstractMatch.MATCH_ID, String.valueOf(matchId));
+                        params.put(UserAdapter.COLUMN_MY_ID, String.valueOf(myId));
                         params.put("partialWord", gameController.obtainPartialWord());
                         return params;
                     }
@@ -268,8 +276,7 @@ public class VersusActivity extends AppCompatActivity {
 
     private void createdNewMatch() {
         UtilActivity.createProcessing(progressDialog);
-        String myToken = FirebaseInstanceId.getInstance().getToken();
-        String url = MySharedPreference.PREFIX_URL + "matches/" + opponentUser + "/" + myToken;
+        String url = MySharedPreference.PREFIX_URL + "match/" + myId + "/" + opponentUser;
         final JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method
                 .GET, url,
                 new JSONObject(), new Response.Listener<JSONObject>() {

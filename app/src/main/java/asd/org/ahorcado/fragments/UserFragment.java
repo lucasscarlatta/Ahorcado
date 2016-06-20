@@ -64,7 +64,7 @@ public class UserFragment extends Fragment {
             public void onItemClick(AdapterView<?> arg0, View arg1,
                                     int position, long arg3) {
                 Map<String, String> userMap = (Map<String, String>) userAdapter.getItem(position);
-                getUserId(userMap.get(UserAdapter.COLUMN_ID), userMap.get(UserAdapter.COLUMN_NAME));
+                getUserId(userMap.get(UserAdapter.COLUMN_ID), userMap.get(UserAdapter.COLUMN_NAME), userMap.get(UserAdapter.COLUMN_MY_ID));
             }
         });
         return view;
@@ -74,7 +74,7 @@ public class UserFragment extends Fragment {
         listView.setAdapter(userAdapter);
     }
 
-    private void getUserId (final String idUserTo, final String nameUserTo) {
+    private void getUserId (final String idUserTo, final String nameUserTo, final String idUserFrom) {
         final ProgressDialog progressDialog = new ProgressDialog(context);
         progressDialog.setMessage(getString(R.string.processing));
         progressDialog.setCancelable(false);
@@ -87,6 +87,7 @@ public class UserFragment extends Fragment {
                         Intent intent = new Intent(context, VersusActivity.class);
                         intent.putExtra(UserAdapter.COLUMN_NAME, nameUserTo);
                         intent.putExtra(UserAdapter.COLUMN_ID, idUserTo);
+                        intent.putExtra(UserAdapter.COLUMN_MY_ID, idUserFrom);
                         progressDialog.dismiss();
                     }
                 },

@@ -123,6 +123,7 @@ public class VersusActivity extends AppCompatActivity {
                 pbOpponent = (ProgressBar) findViewById(R.id.opponentProgress);
                 pbOpponent.setMax(size);
                 pbOpponent.setProgress(0);
+                tvOpponentStatus = (TextView) findViewById(R.id.opponentStatus);
                 tvOpponentStatus.setText(0 + " / " + size);
                 gameController.newMatch(word);
                 progressDialog.dismiss();

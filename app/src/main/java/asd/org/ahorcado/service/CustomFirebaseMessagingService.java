@@ -43,7 +43,8 @@ public class CustomFirebaseMessagingService extends FirebaseMessagingService {
     }
 
     private void getUserAndSendData(final String opponentName, final int opponentId) {
-        String url = MySharedPreference.PREFIX_URL + "installations/findByToken";
+        String myToken = FirebaseInstanceId.getInstance().getToken();
+        String url = MySharedPreference.PREFIX_URL + "installations/findByToken/" + myToken;
         final JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method
                 .GET, url,
                 new JSONObject(), new Response.Listener<JSONObject>() {
